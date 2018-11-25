@@ -1,0 +1,18 @@
+<mat-action-list>
+  <ng-container *ngFor="let data of dataSource">
+    <bc-nested-list-item
+      [isSelect]="data.id === selectedItem"
+      [dataSource]="data"
+      *ngIf="isItem(data)"
+      (itemClick)="_reportItemClick(data)"
+      (itemSelect)="_reportItemSelect(data)"
+    ></bc-nested-list-item>
+    <bc-nested-sub-list
+      [selectedItem]="selectedItem"
+      [dataSource]="data"
+      *ngIf="isSubList(data)"
+      (itemClick)="_reportItemClick($event)"
+      (itemSelect)="_reportItemSelect($event)"
+    ></bc-nested-sub-list>
+  </ng-container>
+</mat-action-list>
