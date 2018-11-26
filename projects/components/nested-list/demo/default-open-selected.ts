@@ -1,22 +1,35 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { NestedListData } from '../nested-list.service';
 
-import md1 from './basic1.md';
-import md2 from './basic2.md';
+import md1 from './default-open-selected1.md';
+import md2 from './default-open-selected2.md';
 
 @Component({
-  selector: 'demo-basic',
+  selector: 'demo-default-open-selected',
   template: `
     <bc-markdown-man>
       <bc-markdown-man-md>{{ md1 }}</bc-markdown-man-md>
-      <bc-markdown-man-comp> <bc-nested-list [dataSource]="data"></bc-nested-list> </bc-markdown-man-comp>
+      <bc-markdown-man-comp>
+        <bc-nested-list [dataSource]="data" [openSubs]="openSubs" [selectedItem]="selectedItem"></bc-nested-list>
+      </bc-markdown-man-comp>
       <bc-markdown-man-md>{{ md2 }}</bc-markdown-man-md>
     </bc-markdown-man>
-  `
+  `,
+  styles: [
+    `
+      .active {
+        background: red;
+      }
+    `
+  ],
+  encapsulation: ViewEncapsulation.None
 })
-export class BasicComponent {
+export class DefaultOpenSelectedComponent {
   md1: string = md1;
   md2: string = md2;
+
+  openSubs = ['test2', 'test2-child2'];
+  selectedItem = 'test2-child2-child2';
 
   data: NestedListData = [
     {

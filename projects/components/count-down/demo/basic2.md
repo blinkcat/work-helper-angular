@@ -1,4 +1,4 @@
-## 基本用法
+## source code
 
 ```typescript
 import { Component, OnInit } from '@angular/core';

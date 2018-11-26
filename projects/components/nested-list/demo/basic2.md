@@ -1,22 +1,16 @@
-## usage
+## source code
 
 ```typescript
+import { Component } from '@angular/core';
+import { NestedListData } from '../nested-list.service';
+
 @Component({
   selector: 'demo-basic',
   template: `
-    <bc-nested-list
-      #list="bcNestedList"
-      [autoOpen]="true"
-      [dataSource]="data"
-      [selectedItem]="selectedItem"
-    ></bc-nested-list>
-
-    <p>openSubs: {{ list.openSubs | json }}</p>
-    <p>selectedItem: {{ list.selectedItem }}</p>
+    <bc-nested-list [dataSource]="data"></bc-nested-list>
   `
 })
 export class BasicComponent {
-  selectedItem = 'test2-child2-child3';
   data: NestedListData = [
     {
       label: 'test1',

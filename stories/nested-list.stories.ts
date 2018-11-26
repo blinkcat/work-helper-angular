@@ -3,21 +3,35 @@ import { withReadme } from 'storybook-readme';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { NestedListModule } from '../projects/components';
+import { NestedListModule, MarkdownManModule } from '../projects/components';
 
 import { BasicComponent } from '../projects/components/nested-list/demo/basic';
-import basicMd from '../projects/components/nested-list/demo/basic.md';
+import { DefaultOpenSelectedComponent } from '../projects/components/nested-list/demo/default-open-selected';
+import { AutoOpenComponent } from '../projects/components/nested-list/demo/auto-open';
+
 import readme from '../projects/components/nested-list/README.md';
 
 storiesOf('nested-list', module)
   .addDecorator(
     moduleMetadata({
-      imports: [BrowserAnimationsModule, NestedListModule]
+      imports: [BrowserAnimationsModule, NestedListModule, MarkdownManModule]
     })
   )
   .add(
     'basic',
-    withReadme([basicMd, readme], () => ({
+    withReadme([readme], () => ({
       component: BasicComponent
+    }))
+  )
+  .add(
+    'custom open and selected',
+    withReadme([readme], () => ({
+      component: DefaultOpenSelectedComponent
+    }))
+  )
+  .add(
+    'auto open',
+    withReadme([readme], () => ({
+      component: AutoOpenComponent
     }))
   );

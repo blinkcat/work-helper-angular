@@ -4,7 +4,7 @@
 
 ## directive
 
-### CountDown
+### CountDownComponent
 
 #### Selector: bc-count-down
 

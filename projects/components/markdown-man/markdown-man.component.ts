@@ -1,21 +1,9 @@
-import {
-  Component,
-  Directive,
-  AfterViewInit,
-  ViewEncapsulation,
-  ViewChild,
-  ElementRef,
-  Renderer2
-} from '@angular/core';
+import { Component, ViewEncapsulation, ElementRef, Renderer2, AfterContentInit } from '@angular/core';
 
 @Component({
   selector: 'bc-markdown-man',
   template: `
-    <div class="bc-markdown-man-component-container" #top><ng-content select="[bcMarkdownManTop]"></ng-content></div>
-    <markdown ngPreserveWhitespaces class="markdown-body"> <ng-content></ng-content> </markdown>
-    <div class="bc-markdown-man-component-container" #bottom>
-      <ng-content select="[bcMarkdownManBottom]"></ng-content>
-    </div>
+    <ng-content></ng-content>
   `,
   styles: [
     `
@@ -23,8 +11,23 @@ import {
         display: block;
         padding: 10px;
       }
+    `
+  ],
+  host: {
+    class: 'bc-markdown-man'
+  },
+  encapsulation: ViewEncapsulation.None
+})
+export class MarkdownManComponent {}
 
-      .bc-markdown-man-component-container {
+@Component({
+  selector: 'bc-markdown-man-comp',
+  template: `
+    <ng-content></ng-content>
+  `,
+  styles: [
+    `
+      .bc-markdown-man-comp {
         position: relative;
         box-sizing: border-box;
         margin: 16px 0px;
@@ -36,19 +39,15 @@ import {
     `
   ],
   host: {
-    class: 'bc-markdown-man'
+    class: 'bc-markdown-man-comp'
   },
   encapsulation: ViewEncapsulation.None
 })
-export class MarkdownManComponent implements AfterViewInit {
-  @ViewChild('top') top: ElementRef<any>;
-  @ViewChild('bottom') bottom: ElementRef<any>;
+export class MarkdownManCComponent implements AfterContentInit {
+  constructor(private ele: ElementRef, private render: Renderer2) {}
 
-  constructor(private render: Renderer2) {}
-
-  ngAfterViewInit() {
-    this.checkContent(this.top);
-    this.checkContent(this.bottom);
+  ngAfterContentInit() {
+    this.checkContent(this.ele);
   }
 
   private checkContent(ele: ElementRef) {
@@ -60,12 +59,14 @@ export class MarkdownManComponent implements AfterViewInit {
   }
 }
 
-@Directive({ selector: '[bcMarkdownManTop]' })
-export class MarkdownManTopDirective {
-  constructor() {}
-}
-
-@Directive({ selector: '[bcMarkdownManBottom]' })
-export class MarkdownManBottomDirective {
-  constructor() {}
-}
+@Component({
+  selector: 'bc-markdown-man-md',
+  template: `
+    <markdown ngPreserveWhitespaces class="markdown-body"> <ng-content></ng-content> </markdown>
+  `,
+  host: {
+    class: 'bc-markdown-man-md'
+  },
+  encapsulation: ViewEncapsulation.None
+})
+export class MarkdownManMComponent {}

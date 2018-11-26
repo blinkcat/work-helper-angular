@@ -1,4 +1,4 @@
-## 自定义 format 函数
+## source code
 
 ```typescript
 import { Component } from '@angular/core';

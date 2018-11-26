@@ -1,22 +1,25 @@
-import { Component } from '@angular/core';
+## source code
+
+```typescript
+import { Component, ViewEncapsulation } from '@angular/core';
 import { NestedListData } from '../nested-list.service';
 
-import md1 from './basic1.md';
-import md2 from './basic2.md';
-
 @Component({
-  selector: 'demo-basic',
+  selector: 'demo-auto-open',
   template: `
-    <bc-markdown-man>
-      <bc-markdown-man-md>{{ md1 }}</bc-markdown-man-md>
-      <bc-markdown-man-comp> <bc-nested-list [dataSource]="data"></bc-nested-list> </bc-markdown-man-comp>
-      <bc-markdown-man-md>{{ md2 }}</bc-markdown-man-md>
-    </bc-markdown-man>
-  `
+    <bc-nested-list [dataSource]="data" [autoOpen]="true" [selectedItem]="selectedItem"></bc-nested-list>
+  `,
+  styles: [
+    `
+      .active {
+        background: red;
+      }
+    `
+  ],
+  encapsulation: ViewEncapsulation.None
 })
-export class BasicComponent {
-  md1: string = md1;
-  md2: string = md2;
+export class AutoOpenComponent {
+  selectedItem = 'test2-child2-child2';
 
   data: NestedListData = [
     {
@@ -78,3 +81,4 @@ export class BasicComponent {
     }
   ];
 }
+```
