@@ -1,0 +1,12 @@
+<div #area>
+  <div class="bc-loading-indicator" [class.bc-loading-indicator-loading]="isLoading">
+    <ng-template [ngTemplateOutlet]="indicator || defaultIndicator"></ng-template>
+    <div class="bc-loading-tip" *ngIf="tip">{{ tip }}</div>
+  </div>
+
+  <div [class.bc-loading-content-blur]="isLoading" #content (cdkObserveContent)="checkContent()">
+    <ng-content></ng-content>
+  </div>
+</div>
+
+<ng-template #defaultIndicator><mat-spinner [diameter]="diameter"></mat-spinner></ng-template>

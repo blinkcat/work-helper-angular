@@ -7,17 +7,17 @@ import { Component } from '@angular/core';
   selector: 'demo-format',
   template: `
     <button mat-stroked-button [disabled]="count.counting" (click)="start()">
-      <bc-count-down #count [seconds]="seconds" [format]="format"></bc-count-down>
+      <bc-count-down #count [target]="target" [format]="format"></bc-count-down>
       <span *ngIf="!count.counting">发送短信</span>
     </button>
     <p>counting: {{ count.counting }}</p>
   `
 })
 export class FormatComponent {
-  seconds: Date;
+  target: Date;
 
   start() {
-    this.seconds = new Date(Date.now() + 10 * 1000);
+    this.target = new Date(Date.now() + 10 * 1000);
   }
 
   format(seconds: number) {

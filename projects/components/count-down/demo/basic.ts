@@ -1,25 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import basic1Md from './basic1.md';
-import basic2Md from './basic2.md';
+
+import md1 from './basic1.md';
+import md2 from './basic2.md';
 
 @Component({
   selector: 'demo-basic',
   template: `
-    <bc-markdown-man>
-      <bc-markdown-man-md> {{ md1 }} </bc-markdown-man-md>
-      <bc-markdown-man-comp>
-        <bc-count-down [seconds]="seconds" bcMarkdownManCTop></bc-count-down>
-      </bc-markdown-man-comp>
-      <bc-markdown-man-md> {{ md2 }} </bc-markdown-man-md>
-    </bc-markdown-man>
+    <bc-markdown-mcm [mdTop]="md1" [mdBottom]="md2">
+      <bc-count-down [target]="target"></bc-count-down>
+    </bc-markdown-mcm>
   `
 })
 export class BasicComponent implements OnInit {
-  seconds: Date;
-  md1: string = basic1Md;
-  md2: string = basic2Md;
+  md1 = md1;
+  md2 = md2;
+
+  target: Date;
 
   ngOnInit() {
-    this.seconds = new Date(Date.now() + 10 * 60 * 60 * 1000);
+    this.target = new Date(Date.now() + 10 * 60 * 60 * 1000);
   }
 }

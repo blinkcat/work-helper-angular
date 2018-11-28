@@ -4,5 +4,4 @@
 
 export * from './nested-list';
 export * from './count-down';
-export * from './loading-man';
-export * from './markdown-man';
+export * from './loading';

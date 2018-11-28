@@ -7,13 +7,9 @@ import md2 from './default-open-selected2.md';
 @Component({
   selector: 'demo-default-open-selected',
   template: `
-    <bc-markdown-man>
-      <bc-markdown-man-md>{{ md1 }}</bc-markdown-man-md>
-      <bc-markdown-man-comp>
-        <bc-nested-list [dataSource]="data" [openSubs]="openSubs" [selectedItem]="selectedItem"></bc-nested-list>
-      </bc-markdown-man-comp>
-      <bc-markdown-man-md>{{ md2 }}</bc-markdown-man-md>
-    </bc-markdown-man>
+    <bc-markdown-mcm [mdTop]="md1" [mdBottom]="md2">
+      <bc-nested-list [dataSource]="data" [openSubs]="openSubs" [selectedItem]="selectedItem"></bc-nested-list>
+    </bc-markdown-mcm>
   `,
   styles: [
     `

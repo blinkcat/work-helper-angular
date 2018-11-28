@@ -1,4 +1,12 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ChangeDetectionStrategy,
+  ViewEncapsulation,
+  HostBinding
+} from '@angular/core';
 import { timer, Observable } from 'rxjs';
 import { map, take, tap, finalize } from 'rxjs/operators';
 
@@ -7,43 +15,49 @@ import { map, take, tap, finalize } from 'rxjs/operators';
   template: `
     {{ _timer$ | async }}
   `,
-  host: {
-    class: 'bc-count-down'
-  },
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CountDownComponent {
+  @HostBinding('class') readonly className = 'bc-count-down';
+
   @Input()
-  set seconds(d: Date) {
-    if (d == null) {
-      d = new Date();
+  set target(date: Date) {
+    if (!(date instanceof Date)) {
+      // date = new Date();
+      return;
     }
-    this._seconds = d;
-    const s = Math.max(Math.floor((d.getTime() - Date.now()) / 1000), 0);
-    let latestNum = s;
+
+    this._target = date;
+
+    const seconds = Math.max(Math.floor((date.getTime() - Date.now()) / 1000), 0);
+    let currentSeconds = seconds;
+
     this._timer$ = timer(0, 1000).pipe(
-      take(s + 1),
-      tap(v => {
-        if (v === 0) {
-          this.toggleCounting();
+      take(seconds + 1),
+      tap(s => {
+        if (s === 0) {
+          this.toggleCountingStatus();
         }
       }),
-      map(v => {
-        latestNum = s - v;
+      map(s => {
+        currentSeconds = seconds - s;
+
+        // 是否需要发送process事件
         if (this.emitProcessEvent) {
-          this.process.emit(latestNum);
+          this.process.emit(currentSeconds);
         }
-        return this.format(latestNum);
+
+        return this.format(currentSeconds);
       }),
       finalize(() => {
-        this.toggleCounting();
-        this.stop.emit(latestNum);
+        this.toggleCountingStatus();
+        this.stop.emit(currentSeconds);
       })
     );
   }
-  get seconds() {
-    return this._seconds;
+  get target() {
+    return this._target;
   }
 
   @Input() format: (seconds: number) => string = this.defaultFormat;
@@ -58,10 +72,10 @@ export class CountDownComponent {
     return this._counting;
   }
 
-  private _seconds: Date;
+  private _target: Date;
   private _counting = false;
 
-  private toggleCounting() {
+  private toggleCountingStatus() {
     // in case of ExpressionChangedAfterItHasBeenCheckedError
     Promise.resolve().then(() => {
       this._counting = !this._counting;

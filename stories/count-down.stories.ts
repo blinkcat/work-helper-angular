@@ -2,7 +2,8 @@ import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { withReadme } from 'storybook-readme';
 import { action } from '@storybook/addon-actions';
 
-import { CountDownModule, MarkdownManModule } from '../projects/components';
+import { CountDownModule } from '../projects/components';
+import { MarkdownModule } from '../projects/components/markdown';
 import { MatButtonModule } from '@angular/material/button';
 
 import { BasicComponent } from '../projects/components/count-down/demo/basic';
@@ -14,27 +15,19 @@ import readme from '../projects/components/count-down/README.md';
 storiesOf('count-down', module)
   .addDecorator(
     moduleMetadata({
-      imports: [CountDownModule, MarkdownManModule, MatButtonModule]
+      imports: [CountDownModule, MarkdownModule, MatButtonModule]
     })
   )
-  .add(
-    'basic',
-    withReadme([readme], () => ({
-      component: BasicComponent
-    }))
-  )
-  .add(
-    'format',
-    withReadme([readme], () => ({
-      component: FormatComponent
-    }))
-  )
-  .add(
-    'stop event',
-    withReadme([readme], () => ({
-      component: StopEventComponent,
-      props: {
-        stopCb: action('stop event')
-      }
-    }))
-  );
+  .addDecorator(withReadme([readme]))
+  .add('basic', () => ({
+    component: BasicComponent
+  }))
+  .add('format', () => ({
+    component: FormatComponent
+  }))
+  .add('stop event', () => ({
+    component: StopEventComponent,
+    props: {
+      stopCb: action('stop event')
+    }
+  }));

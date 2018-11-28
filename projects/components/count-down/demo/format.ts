@@ -1,30 +1,28 @@
 import { Component } from '@angular/core';
-import format1Md from './format1.md';
-import format2Md from './format2.md';
+
+import md1 from './format1.md';
+import md2 from './format2.md';
 
 @Component({
   selector: 'demo-format',
   template: `
-    <bc-markdown-man>
-      <bc-markdown-man-md> {{ md1 }} </bc-markdown-man-md>
-      <bc-markdown-man-comp>
-        <button mat-stroked-button [disabled]="count.counting" (click)="start()">
-          <bc-count-down #count [seconds]="seconds" [format]="format"></bc-count-down>
-          <span *ngIf="!count.counting">发送短信</span>
-        </button>
-        <p>counting: {{ count.counting }}</p>
-      </bc-markdown-man-comp>
-      <bc-markdown-man-md> {{ md2 }} </bc-markdown-man-md>
-    </bc-markdown-man>
+    <bc-markdown-mcm [mdTop]="md1" [mdBottom]="md2">
+      <button mat-stroked-button [disabled]="count.counting" (click)="start()">
+        <bc-count-down #count [target]="target" [format]="format"></bc-count-down>
+        <span *ngIf="!count.counting">发送短信</span>
+      </button>
+      <p>counting: {{ count.counting }}</p>
+    </bc-markdown-mcm>
   `
 })
 export class FormatComponent {
-  seconds: Date;
-  md1: string = format1Md;
-  md2: string = format2Md;
+  md1 = md1;
+  md2 = md2;
+
+  target: Date;
 
   start() {
-    this.seconds = new Date(Date.now() + 10 * 1000);
+    this.target = new Date(Date.now() + 10 * 1000);
   }
 
   format(seconds: number) {

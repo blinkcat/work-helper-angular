@@ -7,7 +7,8 @@ import {
   EventEmitter,
   ViewEncapsulation,
   OnChanges,
-  SimpleChanges
+  SimpleChanges,
+  HostBinding
 } from '@angular/core';
 import { trigger, transition, state, animate, style } from '@angular/animations';
 
@@ -26,15 +27,14 @@ import {
   selector: 'bc-nested-list',
   templateUrl: 'nested-list.component.html',
   styleUrls: ['nested-list.component.scss'],
-  host: {
-    class: 'bc-nested-list'
-  },
   providers: [NestedListService],
   exportAs: 'bcNestedList',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NestedListComponent {
+  @HostBinding('class') readonly className = 'bc-nested-list';
+
   @Input() dataSource: NestedListData;
 
   @Input()
@@ -92,12 +92,11 @@ export class NestedListComponent {
 
 @Component({
   selector: 'bc-nested-sub-list',
-  templateUrl: 'nested-sub-list.component.html',
-  host: {
-    class: 'bc-nested-sub-list'
-  }
+  templateUrl: 'nested-sub-list.component.html'
 })
 export class NestedSubListComponent {
+  @HostBinding('class') readonly className = 'bc-nested-sub-list';
+
   @Input() dataSource: NestedListSubListData;
   @Input() selectedItem: NestedListItemData['id'];
   @Output() itemClick = new EventEmitter<NestedListItemClick>();
@@ -148,17 +147,19 @@ export class NestedSubListComponent {
       <mat-icon matListIcon *ngIf="dataSource.icon">{{ dataSource.icon }}</mat-icon>
       <span mat-line>{{ dataSource.label }}</span>
     </mat-list-item>
-  `,
-  host: {
-    class: 'bc-nested-list-item',
-    '[class.active]': 'isSelect'
-  }
+  `
 })
 export class NestedListItemComponent implements OnChanges {
   @Input() dataSource: NestedListItemData;
   @Input() isSelect: boolean;
   @Output() itemClick = new EventEmitter<NestedListItemClick>();
   @Output() itemSelect = new EventEmitter<NestedListItemSelect>();
+
+  @HostBinding('class') readonly className = 'bc-nested-list-item';
+  @HostBinding('class.active')
+  get classActiveName() {
+    return this.isSelect;
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     if (
@@ -200,10 +201,6 @@ export class NestedListItemComponent implements OnChanges {
       }
     `
   ],
-  host: {
-    class: 'bc-nested-list-collapse',
-    '[class.open]': 'isOpen'
-  },
   animations: [
     trigger('collapse', [
       state(
@@ -225,6 +222,12 @@ export class NestedListItemComponent implements OnChanges {
 })
 export class NestedListCollapseComponent {
   @Input() isOpen = false;
+
+  @HostBinding('class') readonly className = 'bc-nested-list-collapse';
+  @HostBinding('class.open')
+  get classOpenName() {
+    return this.isOpen;
+  }
 
   constructor(private nestedListService: NestedListService) {}
 

@@ -1,0 +1,37 @@
+$bc-lm-prefix: bc-loading;
+$bc-loading-blur: 0.5px;
+
+.#{$bc-lm-prefix} {
+  &-area {
+    position: relative;
+    .#{$bc-lm-prefix}-indicator {
+      display: none;
+      &.#{$bc-lm-prefix}-indicator-loading {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+
+  &-content {
+    transition: opacity 300ms;
+    pointer-events: none;
+    &-blur {
+      opacity: 0.5;
+      // -webkit-filter:blur($bc-loading-man-blur);
+      filter: blur($bc-loading-blur);
+      // -webkit-user-select: none;
+      user-select: none;
+    }
+  }
+
+  &-tip {
+    margin-top: 5px;
+    font-size: 14px;
+  }
+}

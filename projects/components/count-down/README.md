@@ -10,7 +10,7 @@
 
 | Name                                         | Description                              |
 | :------------------------------------------- | :--------------------------------------- |
-| @Input() seconds: Date                       | 未来的时间                               |
+| @Input() target: Date                        | 未来的时间                               |
 | @Input() format: (seconds: number) => string | 用来  格式化时间的函数                   |
 | @Input() emitProcessEvent: boolean           | 是否需要 emit process 事件，默认 false   |
 | @Output() process: EventEmitter<number>      | 每秒 emit 一次，当前的秒数               |
