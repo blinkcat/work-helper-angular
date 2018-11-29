@@ -9,3 +9,4 @@ yarn-lock.json
 docs
 dist
 coverage
+out
