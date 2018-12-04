@@ -27,10 +27,10 @@ export class LoadingComponent implements OnChanges, AfterViewInit, OnDestroy {
   @HostBinding('class') readonly className = 'bc-loading';
 
   @Input() isLoading = false;
-  @Input() tip: string;
+  @Input() tip!: string;
   @Input() size: 'small' | 'default' | 'large' = 'default';
   @Input() delay = 0;
-  @Input() indicator: TemplateRef<any>;
+  @Input() indicator!: TemplateRef<any>;
 
   get diameter() {
     switch (this.size) {
@@ -43,8 +43,8 @@ export class LoadingComponent implements OnChanges, AfterViewInit, OnDestroy {
     }
   }
 
-  @ViewChild('content') content: ElementRef<any>;
-  @ViewChild('area') area: ElementRef<any>;
+  @ViewChild('content') content!: ElementRef<any>;
+  @ViewChild('area') area!: ElementRef<any>;
 
   timer: any = null;
 

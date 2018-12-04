@@ -41,11 +41,11 @@ export class DumbComponent {
   `
 })
 export class BasicComponent {
-  @Input() direction: BcFlexDirection;
-  @Input() justify: BcFlexJustify;
-  @Input() align: BcFlexAlign;
-  @Input() wrap: BcFlexWrap;
-  @Input() alignContent: BcFlexAlignContent;
+  @Input() direction!: BcFlexDirection;
+  @Input() justify!: BcFlexJustify;
+  @Input() align!: BcFlexAlign;
+  @Input() wrap!: BcFlexWrap;
+  @Input() alignContent!: BcFlexAlignContent;
 
   md1 = md1;
   md2 = md2;

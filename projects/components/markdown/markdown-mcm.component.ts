@@ -21,6 +21,6 @@ import { Component, Input, ChangeDetectionStrategy, HostBinding } from '@angular
 export class MarkdownMcmComponent {
   @HostBinding('class') readonly className = 'bc-markdown-mcm';
 
-  @Input() mdTop: string;
-  @Input() mdBottom: string;
+  @Input() mdTop!: string;
+  @Input() mdBottom!: string;
 }

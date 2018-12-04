@@ -35,7 +35,7 @@ import {
 export class NestedListComponent {
   @HostBinding('class') readonly className = 'bc-nested-list';
 
-  @Input() dataSource: NestedListData;
+  @Input() dataSource!: NestedListData;
 
   @Input()
   set openSubs(ids: NestedListSubListId[]) {
@@ -45,7 +45,7 @@ export class NestedListComponent {
     return this.nestedListService.openSubs;
   }
 
-  @Input() selectedItem: NestedListItemData['id'];
+  @Input() selectedItem!: NestedListItemData['id'];
 
   @Input() autoOpen = false;
 
@@ -97,8 +97,8 @@ export class NestedListComponent {
 export class NestedSubListComponent {
   @HostBinding('class') readonly className = 'bc-nested-sub-list';
 
-  @Input() dataSource: NestedListSubListData;
-  @Input() selectedItem: NestedListItemData['id'];
+  @Input() dataSource!: NestedListSubListData;
+  @Input() selectedItem!: NestedListItemData['id'];
   @Output() itemClick = new EventEmitter<NestedListItemClick>();
   @Output() itemSelect = new EventEmitter<NestedListItemSelect>();
 
@@ -150,8 +150,8 @@ export class NestedSubListComponent {
   `
 })
 export class NestedListItemComponent implements OnChanges {
-  @Input() dataSource: NestedListItemData;
-  @Input() isSelect: boolean;
+  @Input() dataSource!: NestedListItemData;
+  @Input() isSelect!: boolean;
   @Output() itemClick = new EventEmitter<NestedListItemClick>();
   @Output() itemSelect = new EventEmitter<NestedListItemSelect>();
 

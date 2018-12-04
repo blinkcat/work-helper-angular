@@ -20,11 +20,11 @@ import md2 from './flex-item2.md';
   `
 })
 export class FlexItemComponent {
-  @Input() direction: BcFlexDirection;
-  @Input() justify: BcFlexJustify;
-  @Input() align: BcFlexAlign;
-  @Input() wrap: BcFlexWrap;
-  @Input() alignContent: BcFlexAlignContent;
+  @Input() direction!: BcFlexDirection;
+  @Input() justify!: BcFlexJustify;
+  @Input() align!: BcFlexAlign;
+  @Input() wrap!: BcFlexWrap;
+  @Input() alignContent!: BcFlexAlignContent;
 
   md1 = md1;
   md2 = md2;

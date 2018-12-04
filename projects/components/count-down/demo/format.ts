@@ -19,7 +19,7 @@ export class FormatComponent {
   md1 = md1;
   md2 = md2;
 
-  target: Date;
+  target!: Date;
 
   start() {
     this.target = new Date(Date.now() + 10 * 1000);

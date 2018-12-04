@@ -15,7 +15,7 @@ export class BasicComponent implements OnInit {
   md1 = md1;
   md2 = md2;
 
-  target: Date;
+  target!: Date;
 
   ngOnInit() {
     this.target = new Date(Date.now() + 10 * 60 * 60 * 1000);

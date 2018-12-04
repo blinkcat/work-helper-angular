@@ -66,13 +66,13 @@ export class CountDownComponent {
   @Output() process = new EventEmitter<number>();
   @Output() stop = new EventEmitter<number>();
 
-  _timer$: Observable<string>;
+  _timer$!: Observable<string>;
 
   get counting() {
     return this._counting;
   }
 
-  private _target: Date;
+  private _target!: Date;
   private _counting = false;
 
   private toggleCountingStatus() {

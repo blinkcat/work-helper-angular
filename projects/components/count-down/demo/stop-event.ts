@@ -20,8 +20,8 @@ export class StopEventComponent {
   md1 = md1;
   md2 = md2;
 
-  @Input() stopCb: (...args: any[]) => any;
-  target: Date;
+  @Input() stopCb!: (...args: any[]) => any;
+  target!: Date;
 
   start() {
     this.target = new Date(Date.now() + 10 * 1000);

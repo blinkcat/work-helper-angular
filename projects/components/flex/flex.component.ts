@@ -48,11 +48,11 @@ export class FlexComponent {
     });
   }
 
-  @Input() direction: BcFlexDirection;
-  @Input() wrap: BcFlexWrap;
-  @Input() justify: BcFlexJustify;
-  @Input() align: BcFlexAlign;
-  @Input() alignContent: BcFlexAlignContent;
+  @Input() direction!: BcFlexDirection;
+  @Input() wrap!: BcFlexWrap;
+  @Input() justify!: BcFlexJustify;
+  @Input() align!: BcFlexAlign;
+  @Input() alignContent!: BcFlexAlignContent;
 
   private classNames(classObj: { [id: string]: boolean | undefined | null }): string {
     if (classObj == null) {
