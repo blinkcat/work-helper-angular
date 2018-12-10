@@ -1,0 +1,30 @@
+.bc-light {
+  pointer-events: auto;
+
+  &-canvas {
+    position: absolute;
+  }
+
+  &-tip {
+    box-sizing: border-box;
+    position: absolute;
+    color: #fff;
+    padding: 16px;
+    &-content {
+      font-size: 16px;
+    }
+    &-dismiss {
+      font-size: 18px;
+    }
+  }
+
+  &-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1001;
+    pointer-events: none;
+  }
+}
