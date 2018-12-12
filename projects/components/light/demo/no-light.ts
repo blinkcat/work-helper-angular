@@ -84,13 +84,10 @@ export class NoLightComponent implements AfterViewInit {
   constructor(private lightService: LightService) {}
 
   ngAfterViewInit() {
-    this.lightService.open(
-      { width: 0, height: 0, top: 0, left: window.innerWidth },
-      {
-        customTemplate: this.arrow,
-        noContextAutoAdjust: true,
-        fixed: true
-      }
-    );
+    this.lightService.open(null, {
+      customTemplate: this.arrow,
+      noContextAutoAdjust: true,
+      fixed: true
+    });
   }
 }
