@@ -1,27 +1,26 @@
+## source code
+
+```typescript
 import { Component, AfterViewInit } from '@angular/core';
 import { LightService } from '../light.service';
-import md1 from './multi1.md';
-import md2 from './multi2.md';
 
 @Component({
   selector: 'demo-multi',
   template: `
-    <bc-markdown-mcm [mdTop]="md1" [mdBottom]="md2">
-      <bc-flex [direction]="'column'" [justify]="'between'" style="height:100vh;">
-        <bc-flex><button mat-button color="primary" id="f1">feature1</button></bc-flex>
-        <bc-flex [justify]="'center'"><button mat-raised-button color="accent" id="f2">feature2</button></bc-flex>
-        <bc-flex [justify]="'end'"><button mat-stroked-button color="warn" id="f3">feature3</button></bc-flex>
-        <bc-flex><button mat-flat-button id="f4" color="primary">feature4</button></bc-flex>
-        <bc-flex [justify]="'center'">
-          <mat-button-toggle-group name="fontStyle" aria-label="Font Style" id="f5">
-            <mat-button-toggle value="bold">Bold</mat-button-toggle>
-            <mat-button-toggle value="italic">Italic</mat-button-toggle>
-            <mat-button-toggle value="underline">Underline</mat-button-toggle>
-          </mat-button-toggle-group>
-        </bc-flex>
-        <bc-flex [justify]="'center'"> <mat-slider id="f6"></mat-slider> </bc-flex>
+    <bc-flex [direction]="'column'" [justify]="'between'" style="height:100vh;">
+      <bc-flex><button mat-button color="primary" id="f1">feature1</button></bc-flex>
+      <bc-flex [justify]="'center'"><button mat-raised-button color="accent" id="f2">feature2</button></bc-flex>
+      <bc-flex [justify]="'end'"><button mat-stroked-button color="warn" id="f3">feature3</button></bc-flex>
+      <bc-flex><button mat-flat-button id="f4" color="primary">feature4</button></bc-flex>
+      <bc-flex [justify]="'center'">
+        <mat-button-toggle-group name="fontStyle" aria-label="Font Style" id="f5">
+          <mat-button-toggle value="bold">Bold</mat-button-toggle>
+          <mat-button-toggle value="italic">Italic</mat-button-toggle>
+          <mat-button-toggle value="underline">Underline</mat-button-toggle>
+        </mat-button-toggle-group>
       </bc-flex>
-    </bc-markdown-mcm>
+      <bc-flex [justify]="'center'"> <mat-slider id="f6"></mat-slider> </bc-flex>
+    </bc-flex>
   `,
   styles: [
     `
@@ -32,9 +31,6 @@ import md2 from './multi2.md';
   ]
 })
 export class MultiComponent implements AfterViewInit {
-  md1 = md1;
-  md2 = md2;
-
   constructor(private lightService: LightService) {}
 
   ngAfterViewInit() {
@@ -59,3 +55,4 @@ export class MultiComponent implements AfterViewInit {
     this.lightService.start();
   }
 }
+```
