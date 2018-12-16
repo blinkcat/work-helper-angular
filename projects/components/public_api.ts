@@ -8,3 +8,4 @@ export * from './loading';
 export * from './flex';
 export * from './scroller';
 export * from './light';
+export * from './result';

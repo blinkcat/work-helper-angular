@@ -1,0 +1,49 @@
+.bc-result {
+  display: block;
+  background-color: #fff;
+
+  &-container {
+    text-align: center;
+    background-color: #fff;
+    padding: 30px 15px 20px;
+  }
+
+  &-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto;
+    & > img,
+    & > mat-icon {
+      width: 100%;
+    }
+    mat-icon {
+      font-size: 60px;
+    }
+  }
+
+  &-title {
+    color: #000;
+    font-size: 22px;
+    line-height: 1;
+    margin-top: 15px;
+  }
+
+  &-description {
+    color: #888;
+    font-size: 16px;
+    line-height: 1.5;
+    margin-top: 10px;
+  }
+
+  &-extras {
+    text-align: left;
+    border-radius: 2px;
+    padding: 12px 20px;
+    margin-top: 12px;
+    background-color: #fafafa;
+  }
+
+  &-button {
+    margin-top: 15px;
+  }
+}

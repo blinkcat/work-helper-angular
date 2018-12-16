@@ -1,0 +1,34 @@
+<section class="bc-result-container">
+  <div class="bc-result-icon" *ngIf="icon">
+    <img src="{{ icon }}" *ngIf="_iconIsString" />
+    <ng-template *ngIf="!_iconIsString" [ngTemplateOutlet]="icon"></ng-template>
+  </div>
+
+  <div class="bc-result-title" *ngIf="title">
+    <ng-container *ngIf="_titleIsString">{{ title }}</ng-container>
+    <ng-template *ngIf="!_titleIsString" [ngTemplateOutlet]="title"></ng-template>
+  </div>
+
+  <div class="bc-result-description" *ngIf="description">
+    <ng-container *ngIf="_descriptionIsString">{{ description }}</ng-container>
+    <ng-template *ngIf="!_descriptionIsString" [ngTemplateOutlet]="description"></ng-template>
+  </div>
+
+  <div class="bc-result-extras" *ngIf="extras">
+    <ng-container *ngIf="_extrasIsString">{{ extras }}</ng-container>
+    <ng-template *ngIf="!_extrasIsString" [ngTemplateOutlet]="extras"></ng-template>
+  </div>
+
+  <div class="bc-result-button" *ngIf="buttonText">
+    <div *ngIf="buttonColor; then: thenBlock; else: elseBlock"></div>
+    <ng-template #thenBlock>
+      <button mat-stroked-button [color]="buttonColor" [disabled]="buttonDisabled" (click)="handleClick()">
+        {{ buttonText }}
+      </button>
+    </ng-template>
+    <ng-template #elseBlock>
+      <button mat-stroked-button [disabled]="buttonDisabled" (click)="handleClick()">{{ buttonText }}</button>
+    </ng-template>
+  </div>
+  <ng-content></ng-content>
+</section>
