@@ -1,0 +1,22 @@
+<h2 mat-dialog-title *ngIf="data?.title">
+  <ng-container *ngIf="!isTemplateRef(data.title); else: titleTemplate"> {{ data.title }} </ng-container>
+  <ng-template #titleTemplate> <ng-template [ngTemplateOutlet]="data.title"></ng-template> </ng-template>
+</h2>
+
+<mat-dialog-content *ngIf="data?.message">
+  <ng-container *ngIf="!isTemplateRef(data.message); else: messageTemplate"> {{ data.message }} </ng-container>
+  <ng-template #messageTemplate> <ng-template [ngTemplateOutlet]="data.message"></ng-template> </ng-template>
+</mat-dialog-content>
+
+<mat-dialog-actions *ngIf="data?.actions" align="end">
+  <ng-container *ngFor="let action of data.actions">
+    <bc-dialog-btn
+      [color]="action.color"
+      [dialogResult]="action.dialogResult"
+      [focus]="action.focus"
+      [closeOnClick]="action.closeOnClick"
+      [text]="action.text"
+      (dialogBtnClick)="action.onClick ? action.onClick() : ''"
+    ></bc-dialog-btn>
+  </ng-container>
+</mat-dialog-actions>

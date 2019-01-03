@@ -1,0 +1,27 @@
+<ng-container *ngIf="closeOnClick && !focus">
+  <button mat-button [mat-dialog-close]="dialogResult" [color]="color" (click)="handleClick()">
+    <ng-container *ngIf="!isTemplateRef(text); else: template1"> {{ text }} </ng-container>
+    <ng-template #template1> <ng-template [ngTemplateOutlet]="text"></ng-template> </ng-template>
+  </button>
+</ng-container>
+
+<ng-container *ngIf="closeOnClick && focus">
+  <button mat-button [mat-dialog-close]="dialogResult" [color]="color" (click)="handleClick()" cdkFocusInitial>
+    <ng-container *ngIf="!isTemplateRef(text); else: template2"> {{ text }} </ng-container>
+    <ng-template #template2> <ng-template [ngTemplateOutlet]="text"></ng-template> </ng-template>
+  </button>
+</ng-container>
+
+<ng-container *ngIf="!closeOnClick && focus">
+  <button mat-button [color]="color" (click)="handleClick()" cdkFocusInitial>
+    <ng-container *ngIf="!isTemplateRef(text); else: template3"> {{ text }} </ng-container>
+    <ng-template #template3> <ng-template [ngTemplateOutlet]="text"></ng-template> </ng-template>
+  </button>
+</ng-container>
+
+<ng-container *ngIf="!closeOnClick && !focus">
+  <button mat-button [color]="color" (click)="handleClick()">
+    <ng-container *ngIf="!isTemplateRef(text); else: template4"> {{ text }} </ng-container>
+    <ng-template #template4> <ng-template [ngTemplateOutlet]="text"></ng-template> </ng-template>
+  </button>
+</ng-container>

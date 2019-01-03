@@ -1,0 +1,46 @@
+<h2 mat-dialog-title *ngIf="data?.title">
+  <ng-container *ngIf="!isTemplateRef(data.title); else: titleTemplate"> {{ data.title }} </ng-container>
+  <ng-template #titleTemplate> <ng-template [ngTemplateOutlet]="data.title"></ng-template> </ng-template>
+</h2>
+
+<mat-dialog-content>
+  <!-- <mat-divider></mat-divider> -->
+  <ng-container *ngIf="data?.message">
+    <ng-container *ngIf="!isTemplateRef(data.message); else: messageTemplate"> {{ data.message }} </ng-container>
+    <ng-template #messageTemplate> <ng-template [ngTemplateOutlet]="data.message"></ng-template> </ng-template>
+  </ng-container>
+
+  <ng-container *ngIf="multi">
+    <mat-selection-list #checkboxes>
+      <mat-list-option
+        *ngFor="let item of data?.items"
+        [value]="item.value"
+        [disabled]="item.disabled"
+        [selected]="item.selected"
+        checkboxPosition="before"
+      >
+        <ng-container *ngIf="!isTemplateRef(item.label); else: labelTemplate"> {{ item.label }} </ng-container>
+        <ng-template #labelTemplate> <ng-template [ngTemplateOutlet]="item.label"></ng-template> </ng-template>
+      </mat-list-option>
+    </mat-selection-list>
+  </ng-container>
+
+  <ng-container *ngIf="!multi">
+    <mat-radio-group #radios="matRadioGroup">
+      <mat-action-list>
+        <mat-list-item *ngFor="let item of data?.items" [disableRipple]="item.disabled">
+          <mat-radio-button [value]="item.value" [disabled]="item.disabled" [checked]="item.checked">
+            <ng-container *ngIf="!isTemplateRef(item.label); else: labelTemplate"> {{ item.label }} </ng-container>
+            <ng-template #labelTemplate> <ng-template [ngTemplateOutlet]="item.label"></ng-template> </ng-template>
+          </mat-radio-button>
+        </mat-list-item>
+      </mat-action-list>
+    </mat-radio-group>
+  </ng-container>
+  <!-- <mat-divider></mat-divider> -->
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <bc-dialog-btn text="取消"></bc-dialog-btn>
+  <bc-dialog-btn color="primary" text="确定" [focus]="true" [dialogResult]="getValue()"></bc-dialog-btn>
+</mat-dialog-actions>

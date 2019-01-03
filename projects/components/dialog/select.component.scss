@@ -1,0 +1,26 @@
+.bc-select {
+  mat-selection-list,
+  mat-action-list {
+    margin-left: -16px;
+    margin-right: -16px;
+  }
+
+  .mat-list-item-content.mat-list-item-content {
+    .mat-list-text.mat-list-text.mat-list-text {
+      padding-left: 32px;
+    }
+  }
+
+  .mat-radio-label-content {
+    padding-left: 32px;
+  }
+
+  .mat-radio-button {
+    display: flex;
+    flex: 1;
+    height: 100%;
+    .mat-radio-label {
+      flex: 1;
+    }
+  }
+}
