@@ -3,7 +3,7 @@ import md1 from './alert1.md';
 import md2 from './alert2.md';
 
 import { BcDialogService } from '../bcDialog.service';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'demo-alert',

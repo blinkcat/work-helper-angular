@@ -1,6 +1,6 @@
 # count-down
 
-倒计时
+短信倒计时
 
 ## directive
 

@@ -1,39 +1,29 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  ChangeDetectionStrategy,
-  ViewEncapsulation,
-  HostBinding
-} from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
 import { timer, Observable } from 'rxjs';
 import { map, take, tap, finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'bc-count-down',
   template: `
-    {{ _timer$ | async }}
+    {{ timer$ | async }}
   `,
+  host: {
+    class: 'bc-count-down'
+  },
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CountDownComponent {
-  @HostBinding('class') readonly className = 'bc-count-down';
-
   @Input()
   set target(date: Date) {
     if (!(date instanceof Date)) {
-      // date = new Date();
-      return;
+      throw Error(`count down target must be Date type. now is: ${date}, type is: ${typeof date}`);
     }
-
-    this._target = date;
 
     const seconds = Math.max(Math.floor((date.getTime() - Date.now()) / 1000), 0);
     let currentSeconds = seconds;
 
-    this._timer$ = timer(0, 1000).pipe(
+    this.timer$ = timer(0, 1000).pipe(
       take(seconds + 1),
       tap(s => {
         if (s === 0) {
@@ -48,16 +38,15 @@ export class CountDownComponent {
           this.process.emit(currentSeconds);
         }
 
-        return this.format(currentSeconds);
+        this._currentTimeStr = this.format(currentSeconds);
+
+        return this._currentTimeStr;
       }),
       finalize(() => {
         this.toggleCountingStatus();
         this.stop.emit(currentSeconds);
       })
     );
-  }
-  get target() {
-    return this._target;
   }
 
   @Input() format: (seconds: number) => string = this.defaultFormat;
@@ -66,13 +55,24 @@ export class CountDownComponent {
   @Output() process = new EventEmitter<number>();
   @Output() stop = new EventEmitter<number>();
 
-  _timer$!: Observable<string>;
+  timer$!: Observable<string>;
 
+  /**
+   * 是否正在倒计时
+   *
+   * @readonly
+   * @memberof CountDownComponent
+   */
   get counting() {
     return this._counting;
   }
 
-  private _target!: Date;
+  get currentTimeStr() {
+    return this._currentTimeStr;
+  }
+
+  private _currentTimeStr = '';
+
   private _counting = false;
 
   private toggleCountingStatus() {

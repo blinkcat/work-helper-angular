@@ -8,7 +8,7 @@ import {
   ChangeDetectorRef
 } from '@angular/core';
 
-import { MAT_DIALOG_DATA } from '@angular/material';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelectionList } from '@angular/material/list';
 import { MatRadioGroup } from '@angular/material/radio';
 
