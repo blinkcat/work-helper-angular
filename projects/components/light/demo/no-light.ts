@@ -1,58 +1,53 @@
 import { Component, AfterViewInit, TemplateRef, ViewChild } from '@angular/core';
 import { LightService } from '../light.service';
-import md1 from './no-light1.md';
-import md2 from './no-light2.md';
 
 @Component({
   selector: 'demo-no-light',
   template: `
-    <bc-markdown-mcm [mdTop]="md1" [mdBottom]="md2">
-      <section>
-        <h3>Goals</h3>
-        <p>
-          The mission of the Angular CLI is to improve your development productivity. We came to a point where we needed
-          a more powerful and generic facility to support the CLI scaffolding, and we settled on 4 primary goals:
-        </p>
-        <ol>
-          <li>
-            Ease of use and development. It had to have simple concepts for developers that were intuitive and feel
-            natural. Also, the code developed needed to be synchronous to make it easier to develop.
-          </li>
-          <li>
-            Extensibility and Reusability. By keeping reusability in mind, we were able to design a simple but powerful
-            pipeable interface. Schematics can be added as the input, or the output of other Schematics. For example, an
-            application can be created using components and modules schematics.
-          </li>
-          <li>
-            Atomicity. We had many errors in the CLI blueprints that were the direct result of side effects by our
-            blueprints. When we created Schematics, we decided to remove side effects entirely from our code. All the
-            changes are recorded in memory, and only applied once they’re confirmed to be valid. For example, creating a
-            file that already exist is an error, and would discard all the other changes applied so far.
-          </li>
-          <li>
-            Asynchronicity. Many workflow are asynchronous in nature (e.g. accessing web servers), and so Schematics had
-            to support those use cases. This seems in contradiction with the first goal of making the debugging process
-            synchronous, but we came to a design that made everything work together. The input of a Schematics is
-            synchronous, but the output can be asynchronous, and the library will wait for everything to be done before
-            starting the next step. This way developers can reuse without even knowing that a Schematics is
-            asynchronous.
-          </li>
-        </ol>
-        <p>
-          All the Schematics design decisions turned out around these 4 major goals. Schematics is the combined efforts
-          to build a better workflow tool.
-        </p>
-      </section>
-      <ng-template #arrow>
-        <mat-card class="tip"
-          >点击右上角<i class="tip-indicator"></i>在浏览器中打开<img
-            width="20"
-            height="20"
-            style="margin-left:5px;"
-            src="https://img.icons8.com/ios/100/000000/right-up2.png"
-        /></mat-card>
-      </ng-template>
-    </bc-markdown-mcm>
+    <section>
+      <h3>Goals</h3>
+      <p>
+        The mission of the Angular CLI is to improve your development productivity. We came to a point where we needed a
+        more powerful and generic facility to support the CLI scaffolding, and we settled on 4 primary goals:
+      </p>
+      <ol>
+        <li>
+          Ease of use and development. It had to have simple concepts for developers that were intuitive and feel
+          natural. Also, the code developed needed to be synchronous to make it easier to develop.
+        </li>
+        <li>
+          Extensibility and Reusability. By keeping reusability in mind, we were able to design a simple but powerful
+          pipeable interface. Schematics can be added as the input, or the output of other Schematics. For example, an
+          application can be created using components and modules schematics.
+        </li>
+        <li>
+          Atomicity. We had many errors in the CLI blueprints that were the direct result of side effects by our
+          blueprints. When we created Schematics, we decided to remove side effects entirely from our code. All the
+          changes are recorded in memory, and only applied once they’re confirmed to be valid. For example, creating a
+          file that already exist is an error, and would discard all the other changes applied so far.
+        </li>
+        <li>
+          Asynchronicity. Many workflow are asynchronous in nature (e.g. accessing web servers), and so Schematics had
+          to support those use cases. This seems in contradiction with the first goal of making the debugging process
+          synchronous, but we came to a design that made everything work together. The input of a Schematics is
+          synchronous, but the output can be asynchronous, and the library will wait for everything to be done before
+          starting the next step. This way developers can reuse without even knowing that a Schematics is asynchronous.
+        </li>
+      </ol>
+      <p>
+        All the Schematics design decisions turned out around these 4 major goals. Schematics is the combined efforts to
+        build a better workflow tool.
+      </p>
+    </section>
+    <ng-template #arrow>
+      <mat-card class="tip"
+        >点击右上角<i class="tip-indicator"></i>在浏览器中打开<img
+          width="20"
+          height="20"
+          style="margin-left:5px;"
+          src="https://img.icons8.com/ios/100/000000/right-up2.png"
+      /></mat-card>
+    </ng-template>
   `,
   /* tslint:disable: max-line-length */
   styles: [
@@ -85,8 +80,6 @@ import md2 from './no-light2.md';
 })
 export class NoLightComponent implements AfterViewInit {
   @ViewChild('arrow') arrow!: TemplateRef<any>;
-  md1 = md1;
-  md2 = md2;
 
   constructor(private lightService: LightService) {}
 

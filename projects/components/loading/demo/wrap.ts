@@ -1,20 +1,27 @@
-import { Component, Input } from '@angular/core';
-
-import md1 from './wrap1.md';
-import md2 from './wrap2.md';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'demo-wrap',
   template: `
-    <bc-markdown-mcm [mdTop]="md1" [mdBottom]="md2">
-      <bc-loading [isLoading]="isLoading" [delay]="delay" [tip]="tip">
-        <p>
-          直接将其他元素或者component包裹在其中， loading-man is so easy to use!<br />
-          可以在 KNOBS 中把玩一些属性<br />
-          go!
-        </p>
-      </bc-loading>
-    </bc-markdown-mcm>
+    <bc-loading [isLoading]="isLoading" [delay]="delay" [tip]="tip">
+      <p>
+        直接将其他元素或者component包裹在其中<br />
+        可以在 KNOBS 中把玩一些属性<br />
+        go!
+      </p>
+    </bc-loading>
+
+    <section class="board">
+      <mat-checkbox [(ngModel)]="isLoading">isLoading</mat-checkbox>
+      <br />
+      <mat-form-field class="example-full-width">
+        <input [(ngModel)]="delay" type="number" matInput placeholder="delay" value="delay" />
+      </mat-form-field>
+      <br />
+      <mat-form-field class="example-full-width">
+        <input [(ngModel)]="tip" matInput placeholder="tip" value="tip" />
+      </mat-form-field>
+    </section>
   `,
   styles: [
     `
@@ -23,14 +30,14 @@ import md2 from './wrap2.md';
         border-radius: 5px;
         padding: 15px;
       }
+      .board {
+        margin: 20px auto 0;
+      }
     `
   ]
 })
 export class WrapComponent {
-  @Input() isLoading = false;
-  @Input() delay = 0;
-  @Input() tip = '';
-
-  md1 = md1;
-  md2 = md2;
+  isLoading = false;
+  delay = 0;
+  tip = '';
 }

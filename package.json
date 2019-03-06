@@ -37,8 +37,6 @@
     "@angular/compiler-cli": "~7.2.6",
     "@angular/language-service": "~7.2.6",
     "@babel/core": "^7.1.6",
-    "@storybook/addon-actions": "^4.0.9",
-    "@storybook/addon-knobs": "^4.1.13",
     "@storybook/addon-options": "^4.1.13",
     "@storybook/addon-viewport": "^4.1.13",
     "@storybook/angular": "^4.1.13",

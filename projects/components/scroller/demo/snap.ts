@@ -1,24 +1,34 @@
 import { Component, Input } from '@angular/core';
 
-import md1 from './snap1.md';
-import md2 from './snap2.md';
-
 /* tslint:disable: max-line-length */
 @Component({
   selector: 'demo-snap',
   template: `
-    <bc-markdown-mcm [mdTop]="md1" [mdBottom]="md2">
-      <bc-scroller
-        [scrollingX]="scrollingX"
-        [scrollingY]="scrollingY"
-        [bouncing]="bouncing"
-        [snapping]="snapping"
-        [snapWidth]="snapWidth"
-        [snapHeight]="snapHeight"
-      >
-        <div class="basic"></div>
-      </bc-scroller>
-    </bc-markdown-mcm>
+    <bc-scroller
+      [scrollingX]="scrollingX"
+      [scrollingY]="scrollingY"
+      [bouncing]="bouncing"
+      [snapping]="snapping"
+      [snapWidth]="snapWidth"
+      [snapHeight]="snapHeight"
+    >
+      <div class="basic"></div>
+    </bc-scroller>
+
+    <section class="board">
+      <mat-checkbox [(ngModel)]="bouncing">bouncing</mat-checkbox>
+      <mat-checkbox [(ngModel)]="snapping">snapping</mat-checkbox>
+      <mat-checkbox [(ngModel)]="scrollingX">scrollingX</mat-checkbox>
+      <mat-checkbox [(ngModel)]="scrollingY">scrollingY</mat-checkbox>
+      <br />
+      <mat-form-field>
+        <input [(ngModel)]="snapWidth" matInput type="number" placeholder="snapWidth" value="76" />
+      </mat-form-field>
+      <br />
+      <mat-form-field>
+        <input [(ngModel)]="snapHeight" matInput type="number" placeholder="snapHeight" value="76" />
+      </mat-form-field>
+    </section>
   `,
   styles: [
     `
@@ -34,18 +44,21 @@ import md2 from './snap2.md';
         background-color: #ccc;
         background: url(https://yt3.ggpht.com/-gbG6dZgR8_o/AAAAAAAAAAI/AAAAAAAAAAA/j_F1ZNd-K80/s76-c-k-no-mo-rj-c0xffffff/photo.jpg);
       }
+      .board {
+        margin: 20px auto 0;
+      }
+      .board > * {
+        margin-right: 5px;
+      }
     `
   ]
 })
 /* tslint:enable: max-line-length */
 export class SnapComponent {
-  md1 = md1;
-  md2 = md2;
-
-  @Input() bouncing = true;
-  @Input() scrollingX = true;
-  @Input() scrollingY = true;
-  @Input() snapping = true;
-  @Input() snapWidth = 76;
-  @Input() snapHeight = 76;
+  bouncing = true;
+  scrollingX = true;
+  scrollingY = true;
+  snapping = true;
+  snapWidth = 76;
+  snapHeight = 76;
 }

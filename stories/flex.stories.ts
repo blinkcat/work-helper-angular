@@ -1,48 +1,29 @@
 import { storiesOf, moduleMetadata } from '@storybook/angular';
+
 import { withReadme } from 'storybook-readme';
-import { radios, withKnobs } from '@storybook/addon-knobs';
 
-import {
-  FlexModule,
-  BcFlexJustify,
-  BcFlexDirection,
-  BcFlexAlign,
-  BcFlexWrap,
-  BcFlexAlignContent
-} from '../projects/components';
-import { MarkdownModule } from '../projects/components/markdown';
+import { MarkdownModule as NgxMarkdownModule } from 'ngx-markdown';
 
-import { BasicComponent, DumbComponent } from '../projects/components/flex/demo/basic';
+import { MatRadioModule } from '@angular/material/radio';
+
+import { FlexModule } from '../projects/components';
+
+import { BasicComponent } from '../projects/components/flex/demo/basic';
 import { FlexItemComponent } from '../projects/components/flex/demo/flex-item';
 
+import basicMd from '../projects/components/flex/demo/basic.md';
+import flexItemMd from '../projects/components/flex/demo/flex-item.md';
 import readme from '../projects/components/flex/README.md';
+
+import { createStoryWithMarkdown } from './util';
 
 storiesOf('flex', module)
   .addDecorator(
     moduleMetadata({
-      imports: [FlexModule, MarkdownModule],
-      declarations: [DumbComponent]
+      imports: [FlexModule, NgxMarkdownModule.forRoot(), MatRadioModule],
+      declarations: [BasicComponent, FlexItemComponent]
     })
   )
   .addDecorator(withReadme([readme]))
-  .addDecorator(withKnobs)
-  .add('basic', () => ({
-    component: BasicComponent,
-    props: {
-      direction: radios('direction', Object.keys(BcFlexDirection)),
-      justify: radios('justify', Object.keys(BcFlexJustify)),
-      align: radios('align', Object.keys(BcFlexAlign)),
-      wrap: radios('wrap', Object.keys(BcFlexWrap)),
-      alignContent: radios('alignContent', Object.keys(BcFlexAlignContent))
-    }
-  }))
-  .add('flex-item', () => ({
-    component: FlexItemComponent,
-    props: {
-      direction: radios('direction', Object.keys(BcFlexDirection)),
-      justify: radios('justify', Object.keys(BcFlexJustify)),
-      align: radios('align', Object.keys(BcFlexAlign)),
-      wrap: radios('wrap', Object.keys(BcFlexWrap)),
-      alignContent: radios('alignContent', Object.keys(BcFlexAlignContent))
-    }
-  }));
+  .add('basic', createStoryWithMarkdown('demo-basic', basicMd))
+  .add('flex-item', createStoryWithMarkdown('demo-flex-item', flexItemMd));

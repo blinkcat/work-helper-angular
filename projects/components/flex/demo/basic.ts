@@ -1,52 +1,72 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { BcFlexJustify, BcFlexDirection, BcFlexAlign, BcFlexWrap, BcFlexAlignContent } from '../flex.component';
-import md1 from './basic1.md';
-import md2 from './basic2.md';
-
-let index = 0;
-
-@Component({
-  selector: 'demo-dumb',
-  template: `
-    {{ text }}
-  `,
-  styles: [
-    `
-      :host {
-        display: block;
-        text-align: center;
-        margin: 5px;
-        background: #ccc;
-      }
-    `
-  ]
-})
-export class DumbComponent {
-  text = `dumb${index++ % 10}`;
-}
 
 @Component({
   selector: 'demo-basic',
   template: `
-    <bc-markdown-mcm [mdTop]="md1" [mdBottom]="md2">
-      <bc-flex [direction]="direction" [justify]="justify" [align]="align" [wrap]="wrap" [alignContent]="alignContent">
-        <demo-dumb
-          *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]"
-          [style.width]="80 + i * 20 + 'px'"
-          [style.height]="30 + i * 5 + 'px'"
-          [style.lineHeight]="30 + i * 5 + 'px'"
-        ></demo-dumb>
-      </bc-flex>
-    </bc-markdown-mcm>
-  `
+    <bc-flex [direction]="direction" [justify]="justify" [align]="align" [wrap]="wrap" [alignContent]="alignContent">
+      <div class="dummy" style="width:30px;height:40px;">1</div>
+      <div class="dummy" style="width:50px;height:60px;">2</div>
+      <div class="dummy" style="width:80px;height:70px;">3</div>
+      <div class="dummy" style="width:100px;height:40px;">4</div>
+      <div class="dummy" style="width:80px;height:100px;">5</div>
+    </bc-flex>
+
+    <section>
+      <h3>direction</h3>
+      <mat-radio-group [(ngModel)]="direction">
+        <mat-radio-button *ngFor="let dir of directionArr" [value]="dir"> {{ dir }} </mat-radio-button>
+      </mat-radio-group>
+
+      <h3>justify</h3>
+      <mat-radio-group [(ngModel)]="justify">
+        <mat-radio-button *ngFor="let jus of justifyArr" [value]="jus"> {{ jus }} </mat-radio-button>
+      </mat-radio-group>
+
+      <h3>align</h3>
+      <mat-radio-group [(ngModel)]="align">
+        <mat-radio-button *ngFor="let ali of alignArr" [value]="ali"> {{ ali }} </mat-radio-button>
+      </mat-radio-group>
+
+      <h3>wrap</h3>
+      <mat-radio-group [(ngModel)]="wrap">
+        <mat-radio-button *ngFor="let wra of wrapArr" [value]="wra"> {{ wra }} </mat-radio-button>
+      </mat-radio-group>
+
+      <h3>alignContent</h3>
+      <mat-radio-group [(ngModel)]="alignContent">
+        <mat-radio-button *ngFor="let alic of alignContentArr" [value]="alic"> {{ alic }} </mat-radio-button>
+      </mat-radio-group>
+    </section>
+  `,
+  styles: [
+    `
+      .dummy {
+        text-align: center;
+        border: 1px solid #ccc;
+        margin: 5px;
+      }
+
+      h3 {
+        margin-bottom: 5px;
+      }
+
+      .mat-radio-button {
+        margin-right: 10px;
+      }
+    `
+  ]
 })
 export class BasicComponent {
-  @Input() direction!: BcFlexDirection;
-  @Input() justify!: BcFlexJustify;
-  @Input() align!: BcFlexAlign;
-  @Input() wrap!: BcFlexWrap;
-  @Input() alignContent!: BcFlexAlignContent;
+  direction!: BcFlexDirection;
+  justify!: BcFlexJustify;
+  align!: BcFlexAlign;
+  wrap!: BcFlexWrap;
+  alignContent!: BcFlexAlignContent;
 
-  md1 = md1;
-  md2 = md2;
+  directionArr = Object.keys(BcFlexDirection);
+  justifyArr = Object.keys(BcFlexJustify);
+  alignArr = Object.keys(BcFlexAlign);
+  wrapArr = Object.keys(BcFlexWrap);
+  alignContentArr = Object.keys(BcFlexAlignContent);
 }

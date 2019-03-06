@@ -21,6 +21,7 @@ import { fromEvent, Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { Scroller } from './scroller';
+import { AnyFunction } from './type';
 
 @Component({
   selector: 'bc-scroller',

@@ -19,7 +19,7 @@ describe('CountDownComponent', () => {
     expect(component).toBeDefined();
   });
 
-  it(`should has class 'bc-count-down'`, () => {
+  it(`should have class 'bc-count-down'`, () => {
     const countDownEl: HTMLElement = fixture.nativeElement;
 
     expect(countDownEl.classList.contains('bc-count-down')).toBeTruthy();
@@ -33,11 +33,19 @@ describe('CountDownComponent', () => {
     expect(component.currentTimeStr).toBe('');
   });
 
-  it('should throw Error if the type of target prop is not Date', () => {
-    expect(() => {
-      component.target = (null as any) as Date;
-    }).toThrowError('count down target must be Date type. now is: null, type is: object');
-  });
+  it('should do nothing if the type of target prop is not Date', fakeAsync(() => {
+    component.target = (null as any) as Date;
+
+    fixture.detectChanges();
+
+    expect(component.counting).toBe(false);
+
+    tick();
+
+    fixture.detectChanges();
+
+    expect(component.counting).toBe(false);
+  }));
 
   it('should start counting down and showing the string of current time after call tick', fakeAsync(() => {
     // 10s
@@ -85,6 +93,7 @@ describe('CountDownComponent', () => {
 
     expect(component.counting).toBe(true);
     expect(component.currentTimeStr).toBe('60s后重发');
+    expect(component.currentSeconds).toBe(60);
     expect(fixture.nativeElement.textContent).toContain('60s后重发');
 
     tick(millis / 2);
@@ -92,6 +101,7 @@ describe('CountDownComponent', () => {
     fixture.detectChanges();
 
     expect(component.currentTimeStr).toBe('30s后重发');
+    expect(component.currentSeconds).toBe(30);
     expect(fixture.nativeElement.textContent).toContain('30s后重发');
 
     tick(millis / 2);
@@ -100,6 +110,7 @@ describe('CountDownComponent', () => {
 
     expect(component.counting).toBe(false);
     expect(component.currentTimeStr).toBe('');
+    expect(component.currentSeconds).toBe(0);
     expect(fixture.nativeElement.textContent.trim()).toBe('');
   }));
 

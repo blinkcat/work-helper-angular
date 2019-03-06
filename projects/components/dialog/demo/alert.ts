@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import md1 from './alert1.md';
-import md2 from './alert2.md';
 
 import { BcDialogService } from '../bcDialog.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -8,20 +6,15 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'demo-alert',
   template: `
-    <bc-markdown-mcm [mdTop]="md1" [mdBottom]="md2">
-      <bc-flex justify="between">
-        <button mat-raised-button (click)="open1()">简单的</button>
-        <button mat-raised-button (click)="open2()">带返回值</button>
-        <button mat-raised-button (click)="open3()">带点击回调</button>
-        <button mat-raised-button (click)="open4()">手动关闭</button>
-      </bc-flex>
-    </bc-markdown-mcm>
+    <bc-flex justify="between">
+      <button mat-raised-button (click)="open1()">简单的</button>
+      <button mat-raised-button (click)="open2()">带返回值</button>
+      <button mat-raised-button (click)="open3()">带点击回调</button>
+      <button mat-raised-button (click)="open4()">手动关闭</button>
+    </bc-flex>
   `
 })
 export class AlertComponent {
-  md1 = md1;
-  md2 = md2;
-
   constructor(private bcDialog: BcDialogService, private snackBar: MatSnackBar) {}
 
   open1() {

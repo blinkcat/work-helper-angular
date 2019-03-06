@@ -2,7 +2,7 @@
   "extends": "../../tslint.json",
   "rules": {
     "directive-selector": [true, "attribute", "bc", "camelCase"],
-    "component-selector": [true, "element", ["bc", "demo"], "kebab-case"],
+    "component-selector": [true, "element", ["bc", "demo", "test"], "kebab-case"],
     "no-non-null-assertion": false
   }
 }

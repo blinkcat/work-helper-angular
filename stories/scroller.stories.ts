@@ -1,46 +1,42 @@
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { withReadme } from 'storybook-readme';
-import { boolean, number, withKnobs } from '@storybook/addon-knobs';
-// import { action } from '@storybook/addon-actions';
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MarkdownModule as NgxMarkdownModule } from 'ngx-markdown';
+
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 import { ScrollerModule } from '../projects/components';
-import { MarkdownModule } from '../projects/components/markdown';
 
 import { BasicComponent } from '../projects/components/scroller/demo/basic';
 import { SnapComponent } from '../projects/components/scroller/demo/snap';
 import { CompleteComponent } from '../projects/components/scroller/demo/complete';
 
+import basicMd from '../projects/components/scroller/demo/basic.md';
+import snapMd from '../projects/components/scroller/demo/snap.md';
+import completeMd from '../projects/components/scroller/demo/complete.md';
+
 import readme from '../projects/components/scroller/README.md';
+
+import { createStoryWithMarkdown } from './util';
 
 storiesOf('scroller', module)
   .addDecorator(
     moduleMetadata({
-      imports: [ScrollerModule, MarkdownModule]
+      imports: [
+        BrowserAnimationsModule,
+        ScrollerModule,
+        MatCheckboxModule,
+        MatInputModule,
+        MatFormFieldModule,
+        NgxMarkdownModule.forRoot()
+      ],
+      declarations: [BasicComponent, SnapComponent, CompleteComponent]
     })
   )
-  .addDecorator(withKnobs)
   .addDecorator(withReadme([readme]))
-  .add('basic', () => ({
-    component: BasicComponent,
-    props: {
-      bouncing: boolean('bouncing', true),
-      animating: boolean('animating', true),
-      scrollingX: boolean('scrollingX', true),
-      scrollingY: boolean('scrollingY', true),
-      animationDuration: number('animationDuration', 250)
-    }
-  }))
-  .add('snap', () => ({
-    component: SnapComponent,
-    props: {
-      bouncing: boolean('bouncing', true),
-      scrollingX: boolean('scrollingX', true),
-      scrollingY: boolean('scrollingY', true),
-      snapping: boolean('snapping', true),
-      snapWidth: number('snapWidth', 76),
-      snapHeight: number('snapHeight', 76)
-    }
-  }))
-  .add('complete', () => ({
-    component: CompleteComponent
-  }));
+  .add('basic', createStoryWithMarkdown('demo-basic', basicMd))
+  .add('snap', createStoryWithMarkdown('demo-snap', snapMd))
+  .add('complete', createStoryWithMarkdown('demo-complete', completeMd));

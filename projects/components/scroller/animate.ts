@@ -1,3 +1,5 @@
+import { AnyFunction } from './type';
+
 /*
  * Scroller
  * http://github.com/zynga/scroller

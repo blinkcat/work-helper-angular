@@ -1,16 +1,11 @@
 import { Component } from '@angular/core';
 
-import md1 from './complete1.md';
-import md2 from './complete2.md';
-
 /* tslint:disable: max-line-length */
 @Component({
   selector: 'demo-complete',
   template: `
-    <bc-markdown-mcm [mdTop]="md1" [mdBottom]="md2">
-      <bc-scroller #scroller (complete)="log()"> <div class="basic"></div> </bc-scroller>
-      <p style="text-align:center">complete scroller.getPosition(): {{ scroller.getPosition() | json }}</p>
-    </bc-markdown-mcm>
+    <bc-scroller #scroller (complete)="log()"> <div class="basic"></div> </bc-scroller>
+    <p style="text-align:center">complete scroller.getPosition(): {{ scroller.getPosition() | json }}</p>
   `,
   styles: [
     `
@@ -31,9 +26,6 @@ import md2 from './complete2.md';
 })
 /* tslint:enable: max-line-length */
 export class CompleteComponent {
-  md1 = md1;
-  md2 = md2;
-
   log() {
     console.log('complete');
   }

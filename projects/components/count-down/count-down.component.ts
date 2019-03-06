@@ -15,13 +15,16 @@ import { map, take, tap, finalize } from 'rxjs/operators';
 })
 export class CountDownComponent {
   @Input()
-  set target(date: Date) {
-    if (!(date instanceof Date)) {
-      throw Error(`count down target must be Date type. now is: ${date}, type is: ${typeof date}`);
-    }
+  set target(targetDate: Date) {
+    const date = targetDate instanceof Date ? targetDate : new Date();
 
     const seconds = Math.max(Math.floor((date.getTime() - Date.now()) / 1000), 0);
-    let currentSeconds = seconds;
+
+    this._currentSeconds = seconds;
+
+    if (this._currentSeconds === 0) {
+      return;
+    }
 
     this.timer$ = timer(0, 1000).pipe(
       take(seconds + 1),
@@ -31,20 +34,19 @@ export class CountDownComponent {
         }
       }),
       map(s => {
-        currentSeconds = seconds - s;
-
+        this._currentSeconds = seconds - s;
         // 是否需要发送process事件
         if (this.emitProcessEvent) {
-          this.process.emit(currentSeconds);
+          this.process.emit(this._currentSeconds);
         }
 
-        this._currentTimeStr = this.format(currentSeconds);
+        this._currentTimeStr = this.format(this._currentSeconds);
 
         return this._currentTimeStr;
       }),
       finalize(() => {
         this.toggleCountingStatus();
-        this.stop.emit(currentSeconds);
+        this.stop.emit(this._currentSeconds);
       })
     );
   }
@@ -67,12 +69,28 @@ export class CountDownComponent {
     return this._counting;
   }
 
+  /**
+   * 当前的时间字符串
+   *
+   * @readonly
+   * @memberof CountDownComponent
+   */
   get currentTimeStr() {
     return this._currentTimeStr;
   }
 
-  private _currentTimeStr = '';
+  /**
+   * 当前秒数
+   *
+   * @readonly
+   * @memberof CountDownComponent
+   */
+  get currentSeconds() {
+    return this._currentSeconds;
+  }
 
+  private _currentSeconds = 0;
+  private _currentTimeStr = '';
   private _counting = false;
 
   private toggleCountingStatus() {
