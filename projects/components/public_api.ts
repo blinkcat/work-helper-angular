@@ -8,3 +8,4 @@ export * from './scroller';
 export * from './light';
 export * from './result';
 export * from './dialog';
+export * from './let';
