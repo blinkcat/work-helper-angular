@@ -1,0 +1,14 @@
+.bc-markdown-comp {
+  position: relative;
+  box-sizing: border-box;
+  margin: 10px;
+  padding: 50px 35px;
+  border: 1px dashed rgb(229, 229, 229);
+  background-color: rgb(255, 255, 255);
+  transition: background-color 0.2s ease 0s;
+}
+
+.bc-markdown {
+  display: block;
+  padding: 10px;
+}
