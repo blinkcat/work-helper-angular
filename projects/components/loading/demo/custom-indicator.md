@@ -13,8 +13,7 @@ import { Component } from '@angular/core';
     <ng-template #indicator> <img src="https://loading.io/spinners/lava-lamp/index.svg" /> </ng-template>
     <bc-loading [isLoading]="true" [indicator]="indicator">
       <p>
-        直接将其他元素或者component包裹在其中， loading-man is so easy to use!<br />
-        可以在 KNOBS 中把玩一些属性<br />
+        直接将其他元素或者component包裹在其中， loading is so easy to use!<br />
         go!
       </p>
     </bc-loading>
@@ -22,8 +21,7 @@ import { Component } from '@angular/core';
     <ng-template #indicator2> <img src="https://loading.io/spinners/flask/index.svg" /> </ng-template>
     <bc-loading [isLoading]="true" [indicator]="indicator2">
       <p>
-        直接将其他元素或者component包裹在其中， loading-man is so easy to use!<br />
-        可以在 KNOBS 中把玩一些属性<br />
+        直接将其他元素或者component包裹在其中， loading is so easy to use!<br />
         go!
       </p>
     </bc-loading>

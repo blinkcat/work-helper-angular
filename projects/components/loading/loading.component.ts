@@ -5,27 +5,25 @@ import {
   TemplateRef,
   ElementRef,
   OnChanges,
-  AfterViewInit,
   OnDestroy,
   ChangeDetectionStrategy,
   SimpleChanges,
   ChangeDetectorRef,
-  ViewChild,
-  Renderer2,
-  HostBinding
+  ViewChild
 } from '@angular/core';
 
 @Component({
   selector: 'bc-loading',
   templateUrl: 'loading.component.html',
   styleUrls: ['loading.component.scss'],
+  host: {
+    class: 'bc-loading'
+  },
   encapsulation: ViewEncapsulation.None,
-  exportAs: 'bcLoading',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  exportAs: 'bcLoading'
 })
-export class LoadingComponent implements OnChanges, AfterViewInit, OnDestroy {
-  @HostBinding('class') readonly className = 'bc-loading';
-
+export class LoadingComponent implements OnChanges, OnDestroy {
   @Input() isLoading = false;
   @Input() tip!: string;
   @Input() size: 'small' | 'default' | 'large' = 'default';
@@ -44,11 +42,10 @@ export class LoadingComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   @ViewChild('content') content!: ElementRef<any>;
-  @ViewChild('area') area!: ElementRef<any>;
 
   timer: any = null;
 
-  constructor(private cdf: ChangeDetectorRef, private render: Renderer2, private ele: ElementRef<any>) {}
+  constructor(private cdf: ChangeDetectorRef) {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (this.delay > 0 && changes.isLoading) {
@@ -66,10 +63,6 @@ export class LoadingComponent implements OnChanges, AfterViewInit, OnDestroy {
     }
   }
 
-  ngAfterViewInit() {
-    this.checkContent();
-  }
-
   ngOnDestroy() {
     this.clearTimer();
   }
@@ -79,25 +72,5 @@ export class LoadingComponent implements OnChanges, AfterViewInit, OnDestroy {
       clearTimeout(this.timer);
       this.timer = null;
     }
-  }
-
-  checkContent() {
-    const ele = this.ele.nativeElement;
-    const content = this.content.nativeElement;
-    const area = this.area.nativeElement;
-
-    if (this.isEmpty(this.content)) {
-      this.render.removeStyle(ele, 'display');
-      this.render.removeClass(content, 'bc-loading-content');
-      this.render.removeClass(area, 'bc-loading-area');
-    } else {
-      this.render.setStyle(ele, 'display', 'block');
-      this.render.addClass(content, 'bc-loading-content');
-      this.render.addClass(area, 'bc-loading-area');
-    }
-  }
-
-  private isEmpty(ele: ElementRef<any>) {
-    return ele.nativeElement.childNodes.length === 0;
   }
 }

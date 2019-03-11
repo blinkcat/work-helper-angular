@@ -1,6 +1,6 @@
 # loading
 
-加载
+包裹正在加载的 component
 
 ## Directives
 

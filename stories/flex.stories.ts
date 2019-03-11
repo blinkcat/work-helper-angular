@@ -1,5 +1,4 @@
 import { storiesOf, moduleMetadata } from '@storybook/angular';
-
 import { withReadme } from 'storybook-readme';
 
 import { MarkdownModule as NgxMarkdownModule } from 'ngx-markdown';
@@ -11,9 +10,9 @@ import { FlexModule } from '../projects/components';
 import { BasicComponent } from '../projects/components/flex/demo/basic';
 import { FlexItemComponent } from '../projects/components/flex/demo/flex-item';
 
-import basicMd from '../projects/components/flex/demo/basic.md';
-import flexItemMd from '../projects/components/flex/demo/flex-item.md';
-import readme from '../projects/components/flex/README.md';
+import * as basicMd from '../projects/components/flex/demo/basic.md';
+import * as flexItemMd from '../projects/components/flex/demo/flex-item.md';
+import * as readme from '../projects/components/flex/README.md';
 
 import { createStoryWithMarkdown } from './util';
 

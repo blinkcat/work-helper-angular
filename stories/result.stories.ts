@@ -1,5 +1,6 @@
-import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { BrowserModule } from '@angular/platform-browser';
+
+import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { withReadme } from 'storybook-readme';
 
 import { MarkdownModule as NgxMarkdownModule } from 'ngx-markdown';
@@ -14,13 +15,12 @@ import { FailureComponent } from '../projects/components/result/demo/failure';
 import { WaitComponent } from '../projects/components/result/demo/wait';
 import { WarnComponent } from '../projects/components/result/demo/warn';
 
-import basicMd from '../projects/components/result/demo/basic.md';
-import successMd from '../projects/components/result/demo/success.md';
-import failureMd from '../projects/components/result/demo/failure.md';
-import waitMd from '../projects/components/result/demo/wait.md';
-import warnMd from '../projects/components/result/demo/warn.md';
-
-import readme from '../projects/components/result/README.md';
+import * as readme from '../projects/components/result/README.md';
+import * as basicMd from '../projects/components/result/demo/basic.md';
+import * as successMd from '../projects/components/result/demo/success.md';
+import * as failureMd from '../projects/components/result/demo/failure.md';
+import * as waitMd from '../projects/components/result/demo/wait.md';
+import * as warnMd from '../projects/components/result/demo/warn.md';
 
 import { createStoryWithMarkdown } from './util';
 

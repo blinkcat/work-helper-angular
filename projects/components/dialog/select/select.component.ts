@@ -12,8 +12,8 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelectionList } from '@angular/material/list';
 import { MatRadioGroup } from '@angular/material/radio';
 
-import { isTemplateRef } from '../util';
-import { BcSelectData } from './bcDialog.service';
+import { isTemplateRef } from '../../util';
+import { BcSelectData } from '../bcDialog.service';
 
 @Component({
   selector: 'bc-select',
@@ -21,7 +21,8 @@ import { BcSelectData } from './bcDialog.service';
   styleUrls: ['select.component.scss'],
   /* tslint:disable: use-host-property-decorator */
   host: {
-    class: 'bc-select'
+    class: 'bc-select',
+    '[class.bc-select-multi]': 'multi'
   },
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush

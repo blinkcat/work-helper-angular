@@ -16,7 +16,7 @@
       [focus]="action.focus"
       [closeOnClick]="action.closeOnClick"
       [text]="action.text"
-      (dialogBtnClick)="action.onClick ? action.onClick() : ''"
+      (dialogBtnClick)="action.onClick ? action.onClick($event) : ''"
     ></bc-dialog-btn>
   </ng-container>
 </mat-dialog-actions>

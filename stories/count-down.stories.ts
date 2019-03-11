@@ -11,10 +11,10 @@ import { BasicComponent } from '../projects/components/count-down/demo/basic';
 import { FormatComponent } from '../projects/components/count-down/demo/format';
 import { StopEventComponent } from '../projects/components/count-down/demo/stop-event';
 
-import readme from '../projects/components/count-down/README.md';
-import basicMd from '../projects/components/count-down/demo/basic.md';
-import formatMd from '../projects/components/count-down/demo/format.md';
-import stopEventMd from '../projects/components/count-down/demo/stop-event.md';
+import * as readme from '../projects/components/count-down/README.md';
+import * as basicMd from '../projects/components/count-down/demo/basic.md';
+import * as formatMd from '../projects/components/count-down/demo/format.md';
+import * as stopEventMd from '../projects/components/count-down/demo/stop-event.md';
 
 import { createStoryWithMarkdown } from './util';
 

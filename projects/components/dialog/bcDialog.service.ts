@@ -1,15 +1,16 @@
 import { Injectable, TemplateRef } from '@angular/core';
-import { ComponentType } from '@angular/cdk/portal';
+
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { ThemePalette } from '@angular/material/core';
+import { ThemePalette } from '@angular/material';
+import { ComponentType } from '@angular/cdk/portal';
 
 import { AlertComponent } from './alert.component';
-import { SelectComponent } from './select.component';
+import { SelectComponent } from './select/select.component';
 
 //#region type and interface
 type StringOrTemplateRef = string | TemplateRef<any>;
 
-interface ButtonData {
+interface BcButton {
   text: StringOrTemplateRef;
   focus?: boolean;
   dialogResult?: any; // 点击按钮关闭dialog时的返回值
@@ -21,7 +22,7 @@ interface ButtonData {
 export interface BcAlertData {
   title?: StringOrTemplateRef;
   message?: StringOrTemplateRef;
-  actions?: ButtonData[];
+  actions?: BcButton[];
 }
 
 export interface BcSelectItem {
@@ -47,16 +48,14 @@ export class BcDialogService {
   alert(
     title?: StringOrTemplateRef | null,
     message?: StringOrTemplateRef | null,
-    actions?: ButtonData[] | null,
+    actions?: BcButton[] | null,
     dialogConfig?: MatDialogConfig
   ) {
-    const completeActions = this.completeActions(actions);
-
     return this.open<AlertComponent, BcAlertData, any>(AlertComponent, {
       ...dialogConfig,
       role: 'alertdialog',
       disableClose: true,
-      data: { title, message, actions: completeActions }
+      data: { title, message, actions: this.completeActions(actions) }
     });
   }
 
@@ -67,8 +66,7 @@ export class BcDialogService {
     items: BcSelectItem[],
     dialogConfig?: MatDialogConfig
   ) {
-    return this.open<SelectComponent, BcSelectData, BcSelectItem['value']>(SelectComponent, {
-      // autoFocus: false,
+    return this.open<SelectComponent, BcSelectData, BcSelectItem['value'] | BcSelectItem['value'][]>(SelectComponent, {
       ...dialogConfig,
       data: {
         title,
@@ -86,7 +84,7 @@ export class BcDialogService {
     });
   }
 
-  private completeActions(actions?: ButtonData[] | null) {
+  private completeActions(actions?: BcButton[] | null) {
     return actions ? actions.map(action => ({ focus: false, closeOnClick: true, ...action })) : actions;
   }
 }

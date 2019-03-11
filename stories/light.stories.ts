@@ -1,6 +1,7 @@
-import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { withReadme } from 'storybook-readme';
 
 import { MarkdownModule as NgxMarkdownModule } from 'ngx-markdown';
@@ -15,11 +16,10 @@ import { BasicComponent } from '../projects/components/light/demo/basic';
 import { MultiComponent } from '../projects/components/light/demo/multi';
 import { NoLightComponent } from '../projects/components/light/demo/no-light';
 
-import basicMd from '../projects/components/light/demo/basic.md';
-import multiMd from '../projects/components/light/demo/multi.md';
-import noLightMd from '../projects/components/light/demo/no-light.md';
-
-import readme from '../projects/components/light/README.md';
+import * as readme from '../projects/components/light/README.md';
+import * as basicMd from '../projects/components/light/demo/basic.md';
+import * as multiMd from '../projects/components/light/demo/multi.md';
+import * as noLightMd from '../projects/components/light/demo/no-light.md';
 
 import { createStoryWithMarkdown } from './util';
 

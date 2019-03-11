@@ -1,7 +1,8 @@
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { withReadme } from 'storybook-readme';
 
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MarkdownModule as NgxMarkdownModule } from 'ngx-markdown';
 
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -14,11 +15,10 @@ import { BasicComponent } from '../projects/components/scroller/demo/basic';
 import { SnapComponent } from '../projects/components/scroller/demo/snap';
 import { CompleteComponent } from '../projects/components/scroller/demo/complete';
 
-import basicMd from '../projects/components/scroller/demo/basic.md';
-import snapMd from '../projects/components/scroller/demo/snap.md';
-import completeMd from '../projects/components/scroller/demo/complete.md';
-
-import readme from '../projects/components/scroller/README.md';
+import * as readme from '../projects/components/scroller/README.md';
+import * as basicMd from '../projects/components/scroller/demo/basic.md';
+import * as snapMd from '../projects/components/scroller/demo/snap.md';
+import * as completeMd from '../projects/components/scroller/demo/complete.md';
 
 import { createStoryWithMarkdown } from './util';
 

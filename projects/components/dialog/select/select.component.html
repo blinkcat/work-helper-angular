@@ -4,7 +4,6 @@
 </h2>
 
 <mat-dialog-content>
-  <!-- <mat-divider></mat-divider> -->
   <ng-container *ngIf="data?.message">
     <ng-container *ngIf="!isTemplateRef(data.message); else: messageTemplate"> {{ data.message }} </ng-container>
     <ng-template #messageTemplate> <ng-template [ngTemplateOutlet]="data.message"></ng-template> </ng-template>
@@ -37,7 +36,6 @@
       </mat-action-list>
     </mat-radio-group>
   </ng-container>
-  <!-- <mat-divider></mat-divider> -->
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
