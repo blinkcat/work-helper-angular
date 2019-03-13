@@ -1,18 +1,30 @@
 import {
   Component,
   AfterViewInit,
-  OnChanges,
+  OnDestroy,
   ViewEncapsulation,
   Renderer2,
   ElementRef,
-  Input,
+  ChangeDetectorRef,
   ViewChild,
   TemplateRef,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
+  NgZone
 } from '@angular/core';
-import { trigger, style, animate, transition, AnimationEvent } from '@angular/animations';
-import { Subject } from 'rxjs';
-import { BcLightTarget, BcLightContainer } from './light.service';
+import { AnimationEvent } from '@angular/animations';
+
+import { Subject, fromEvent } from 'rxjs';
+import { takeUntil, debounceTime } from 'rxjs/operators';
+
+import { BcLightTarget, BcLightConfig } from './light.service';
+import { Paint } from './Paint';
+import { lightAnimations } from './light-animations';
+
+export type BcLightShape = 'rect' | 'round' | 'roundedRect';
+interface BcLightContainer {
+  width: number;
+  height: number;
+}
 
 @Component({
   selector: 'bc-light',
@@ -22,8 +34,8 @@ import { BcLightTarget, BcLightContainer } from './light.service';
       <div class="bc-light-tip-dismiss">{{ dismissText }}</div>
     </ng-template>
 
-    <canvas class="bc-light-canvas" #canvas @inOut (@inOut.done)="animationDone($event)" *ngIf="!clickToClose"></canvas>
-    <div class="bc-light-tip" @inOut #lightContent *ngIf="!clickToClose">
+    <canvas class="bc-light-canvas" #canvas></canvas>
+    <div class="bc-light-tip" #lightContent>
       <ng-template [ngTemplateOutlet]="customTemplate || defaultTemplate"></ng-template>
     </div>
   `,
@@ -31,198 +43,169 @@ import { BcLightTarget, BcLightContainer } from './light.service';
   /* tslint:disable:use-host-property-decorator */
   host: {
     class: 'bc-light',
-    '(click)': 'close()'
+    '[@state]': '_animationState',
+    '(@state.done)': 'onAnimationDone($event)',
+    '(click)': '_backdropClick.next($event)'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  animations: [
-    trigger('inOut', [
-      transition(':enter', [style({ opacity: 0 }), animate(300, style({ opacity: 1 }))]),
-      transition(':leave', [animate(300, style({ opacity: 0 }))])
-    ])
-  ]
+  animations: [lightAnimations.lightState]
 })
-export class LightComponent implements OnChanges, AfterViewInit {
-  @Input() target!: BcLightTarget | null;
-  @Input() container!: BcLightContainer;
-  @Input() padding = 5;
-  @Input() indicatorShape: BcLightShape = 'roundedRect';
-  @Input() contentText = '这是一个新功能';
-  @Input() dismissText = '知道了';
-  @Input() customTemplate!: TemplateRef<any>;
-  @Input() noContextAutoAdjust = false;
+export class LightComponent implements AfterViewInit, OnDestroy {
+  focusElement!: HTMLElement;
+  get target(): BcLightTarget {
+    return this.focusElement.getBoundingClientRect();
+  }
+  get container(): BcLightContainer {
+    return {
+      width: document.documentElement!.scrollWidth,
+      height: document.documentElement!.scrollHeight
+    };
+  }
+  get backdropClick() {
+    return this._backdropClick.asObservable();
+  }
+
+  padding = 5;
+  indicatorShape: BcLightShape = 'roundedRect';
+  contentText!: string;
+  dismissText!: string;
+  customTemplate!: TemplateRef<any> | undefined;
+  noContextAutoAdjust = false;
 
   @ViewChild('canvas') canvas!: ElementRef<HTMLCanvasElement>;
   @ViewChild('lightContent') lightContent!: ElementRef<HTMLElement>;
 
-  clickToClose = false;
+  readonly _onExit = new Subject<void>();
+  readonly _onEnter = new Subject<void>();
+  _animationState = 'void';
+  readonly _backdropClick = new Subject<MouseEvent>();
 
-  get closeDone() {
-    return this._closeDone.asObservable();
-  }
+  private paint!: Paint;
+  private destory = new Subject<void>();
 
-  private _closeDone = new Subject();
-
-  constructor(private render: Renderer2) {}
-
-  ngOnChanges() {
-    this.initCanvas();
-    this.draw(true);
+  constructor(private render: Renderer2, private ngZone: NgZone, private cdf: ChangeDetectorRef) {
+    this.ngZone.runOutsideAngular(() => {
+      fromEvent(window, 'resize')
+        .pipe(
+          debounceTime(200),
+          takeUntil(this.destory)
+        )
+        .subscribe(() => {
+          this.updateFocusPosition();
+        });
+    });
   }
 
   ngAfterViewInit() {
-    this.initCanvas();
-    this.draw();
+    const {
+      container: { width, height },
+      canvas,
+      indicatorShape,
+      render,
+      target,
+      padding
+    } = this;
+
+    this.paint = new Paint(canvas.nativeElement, width, height, render).init().draw(target, indicatorShape, padding);
+
+    this.updateTipPosition();
   }
 
-  close() {
-    this.clickToClose = true;
+  ngOnDestroy() {
+    (this.focusElement as any) = null;
+
+    this.destory.next();
+    this.destory.complete();
+
+    this.completeExit();
   }
 
-  animationDone(event: AnimationEvent) {
-    if (event.toState === 'void') {
-      this._closeDone.next();
+  onAnimationDone(event: AnimationEvent) {
+    const { toState } = event;
+
+    if (toState === 'hidden') {
+      this.completeExit();
+    }
+
+    if (toState === 'visible') {
+      this._onEnter.next();
+      this._onEnter.complete();
     }
   }
 
-  private initCanvas() {
-    const container = this.container;
-    const canvas = this.canvas.nativeElement;
-
-    this.render.setProperty(canvas, 'width', container.width);
-    this.render.setProperty(canvas, 'height', container.height);
+  enter() {
+    this._animationState = 'visible';
   }
 
-  private draw(redrawing = false) {
-    const canvas = this.canvas.nativeElement;
-    const ctx = canvas.getContext('2d');
+  exit() {
+    this._animationState = 'hidden';
+  }
 
-    const container = this.container;
+  detectChanges() {
+    this.cdf.detectChanges();
+  }
 
-    if (ctx) {
-      if (redrawing) {
-        ctx.clearRect(0, 0, container.width, container.height);
+  setProps(config?: BcLightConfig) {
+    config = config || {};
+
+    this.padding = config.padding || 5;
+    this.indicatorShape = config.indicatorShape || 'roundedRect';
+    this.contentText = config.contentText || '';
+    this.dismissText = config.dismissText || '';
+    this.customTemplate = config.customTemplate;
+    this.noContextAutoAdjust = config.noContextAutoAdjust || false;
+  }
+
+  updateFocusPosition() {
+    const { target, indicatorShape, padding, paint, noContextAutoAdjust } = this;
+
+    if (paint) {
+      const { width, height } = this.container;
+
+      paint.update(width, height).draw(target, indicatorShape, padding);
+      if (!noContextAutoAdjust) {
+        this.updateTipPosition();
       }
-      this.setCtxBg(ctx);
-      this.drawBg(ctx, container.width, container.height);
-      this.drawLight(ctx, this.indicatorShape);
-      this.fill(ctx);
     }
   }
 
-  private drawBg(ctx: CanvasRenderingContext2D, width: number, height: number) {
-    // 逆时针
-    ctx.beginPath();
-    ctx.moveTo(0, 0);
-    ctx.lineTo(0, height);
-    ctx.lineTo(width, height);
-    ctx.lineTo(width, 0);
-    ctx.closePath();
-  }
-
-  private drawLight(ctx: CanvasRenderingContext2D, shape: BcLightShape) {
-    if (!this.target) {
-      return;
-    }
-
+  private updateTipPosition() {
     const target = this.target;
-    const padding = this.padding;
 
     const top = target.top + document.documentElement!.scrollTop || document.body.scrollTop;
     const left = target.left + document.documentElement!.scrollLeft || document.body.scrollLeft;
 
-    switch (shape) {
-      case 'rect':
-        this.rect(ctx, left - padding, top - padding, target.width + padding * 2, target.height + padding * 2);
-        break;
-      case 'round':
-        this.round(
-          ctx,
-          left + target.width / 2,
-          top + target.height / 2,
-          Math.max(target.width, target.height) / 2 + padding
-        );
-        break;
-      case 'roundedRect':
-        this.roundedRect(
-          ctx,
-          left - padding,
-          top - padding,
-          target.width + padding * 2,
-          target.height + padding * 2,
-          6.5
-        );
-        break;
-      default:
-        this.rect(ctx, left - padding, top - padding, target.width + padding * 2, target.height + padding * 2);
-    }
-
     // 适配文字位置
-    if (!this.noContextAutoAdjust) {
-      const lightContent = this.lightContent.nativeElement;
+    const lightContent = this.lightContent.nativeElement;
 
-      const halfScreenWidth = window.innerWidth / 2;
+    const halfScreenWidth = window.innerWidth / 2;
 
-      if (target.left + target.width / 2 > halfScreenWidth) {
-        this.render.setStyle(lightContent, 'left', `${left - lightContent.offsetWidth}px`);
-      } else {
-        this.render.setStyle(lightContent, 'left', `${left}px`);
-      }
+    const lightContentWidth = lightContent.offsetWidth;
 
-      const halfScreenHeight = window.innerHeight / 2;
+    if (target.left + target.width / 2 > halfScreenWidth) {
+      this.render.setStyle(lightContent, 'left', `${left - (lightContentWidth - target.width) / 2}px`);
+    } else {
+      this.render.setStyle(lightContent, 'left', `${Math.max(0, left - (lightContentWidth - target.width) / 2)}px`);
+    }
 
-      if (target.top + target.height / 2 > halfScreenHeight) {
-        this.render.setStyle(lightContent, 'top', `${top - lightContent.offsetHeight}px`);
-      } else {
-        this.render.setStyle(lightContent, 'top', `${top + target.height}px`);
-      }
+    const halfScreenHeight = window.innerHeight / 2;
+
+    const lightContentHeight = lightContent.offsetHeight;
+
+    if (target.top + target.height / 2 > halfScreenHeight) {
+      this.render.setStyle(lightContent, 'top', `${top - lightContentHeight}px`);
+    } else {
+      this.render.setStyle(lightContent, 'top', `${top + target.height}px`);
     }
   }
 
-  private setCtxBg(ctx: CanvasRenderingContext2D, bgColor = 'rgba(0,0,0,0.5)') {
-    ctx.fillStyle = bgColor;
+  private completeExit() {
+    if (!this._onExit.closed) {
+      setTimeout(() => {
+        this._onExit.next();
+        this._onExit.complete();
+      });
+    }
   }
-
-  private fill(ctx: CanvasRenderingContext2D) {
-    ctx.fill();
-  }
-
-  // #region 顺时针绘制各种图形
-  // 矩形
-  private rect(ctx: CanvasRenderingContext2D, x: number, y: number, width: number, height: number) {
-    ctx.moveTo(x, y);
-    ctx.lineTo(x + width, y);
-    ctx.lineTo(x + width, y + height);
-    ctx.lineTo(x, y + height);
-    ctx.closePath();
-  }
-
-  // 圆形
-  private round(ctx: CanvasRenderingContext2D, x: number, y: number, radius: number) {
-    ctx.arc(x, y, radius, 0, 2 * Math.PI, false);
-  }
-
-  // 圆角矩形
-  private roundedRect(
-    ctx: CanvasRenderingContext2D,
-    x: number,
-    y: number,
-    width: number,
-    height: number,
-    radius: number
-  ) {
-    ctx.moveTo(x + radius, y);
-    ctx.lineTo(x + width - radius, y);
-    ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
-    ctx.lineTo(x + width, y + height - radius);
-    ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
-    ctx.lineTo(x + radius, y + height);
-    ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
-    ctx.lineTo(x, y + radius);
-    ctx.quadraticCurveTo(x, y, x + radius, y);
-    ctx.closePath();
-  }
-  // #endregion
 }
-
-export type BcLightShape = 'rect' | 'round' | 'roundedRect';

@@ -1,26 +1,22 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { LightService } from '../light.service';
 
 @Component({
   selector: 'demo-basic',
   template: `
     <bc-flex [direction]="'column'" [justify]="'center'" [align]="'center'" style="height:100%">
-      <button mat-raised-button color="accent" id="f1">feature</button>
+      <button mat-raised-button color="accent" id="f1" (click)="open()">click to focus</button>
     </bc-flex>
-  `,
-  styles: [
-    `
-      :host {
-        display: block;
-        height: 100vh;
-      }
-    `
-  ]
+  `
 })
-export class BasicComponent implements AfterViewInit {
+export class BasicComponent {
   constructor(private lightService: LightService) {}
 
-  ngAfterViewInit() {
-    this.lightService.open(document.getElementById('f1')!);
+  open() {
+    const ref = this.lightService.open(document.getElementById('f1')!, { dismissText: 'test' });
+
+    ref.backdropClick().subscribe(() => {
+      ref.close();
+    });
   }
 }

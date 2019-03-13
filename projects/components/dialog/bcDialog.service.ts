@@ -10,6 +10,8 @@ import { SelectComponent } from './select/select.component';
 //#region type and interface
 type StringOrTemplateRef = string | TemplateRef<any>;
 
+type AnyFunction = (...args: any[]) => any;
+
 interface BcButton {
   text: StringOrTemplateRef;
   focus?: boolean;

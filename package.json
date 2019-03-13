@@ -10,7 +10,8 @@
     "e2e": "ng e2e",
     "build-lib": "ng build --prod work-helper-angular-lib",
     "dev": "start-storybook -p 9001 -s ./stories/public -c .storybook",
-    "build-storybook": "build-storybook -c .storybook -s ./stories/public -o out/storybook"
+    "build-storybook": "build-storybook -c .storybook -s ./stories/public -o out/storybook",
+    "coverage": "ng test work-helper-angular-lib --no-watch --code-coverage"
   },
   "private": true,
   "dependencies": {
