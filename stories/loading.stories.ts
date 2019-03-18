@@ -1,7 +1,6 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { storiesOf, moduleMetadata } from '@storybook/angular';
-import { withReadme } from 'storybook-readme';
 
 import { MarkdownModule as NgxMarkdownModule } from 'ngx-markdown';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -20,6 +19,9 @@ import * as customIndicatorMd from '../projects/components/loading/demo/custom-i
 import { createStoryWithMarkdown } from './util';
 
 storiesOf('loading', module)
+  .addParameters({
+    notes: readme
+  })
   .addDecorator(
     moduleMetadata({
       imports: [
@@ -33,6 +35,5 @@ storiesOf('loading', module)
       declarations: [BasicComponent, CustomIndicatorComponent]
     })
   )
-  .addDecorator(withReadme([readme]))
   .add('basic', createStoryWithMarkdown('demo-basic', basicMd))
   .add('custom indicator', createStoryWithMarkdown('demo-custom-indicator', customIndicatorMd));

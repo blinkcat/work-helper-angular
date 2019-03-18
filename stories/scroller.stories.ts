@@ -1,7 +1,6 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { storiesOf, moduleMetadata } from '@storybook/angular';
-import { withReadme } from 'storybook-readme';
 
 import { MarkdownModule as NgxMarkdownModule } from 'ngx-markdown';
 
@@ -23,6 +22,9 @@ import * as completeMd from '../projects/components/scroller/demo/complete.md';
 import { createStoryWithMarkdown } from './util';
 
 storiesOf('scroller', module)
+  .addParameters({
+    notes: readme
+  })
   .addDecorator(
     moduleMetadata({
       imports: [
@@ -36,7 +38,6 @@ storiesOf('scroller', module)
       declarations: [BasicComponent, SnapComponent, CompleteComponent]
     })
   )
-  .addDecorator(withReadme([readme]))
   .add('basic', createStoryWithMarkdown('demo-basic', basicMd))
   .add('snap', createStoryWithMarkdown('demo-snap', snapMd))
   .add('complete', createStoryWithMarkdown('demo-complete', completeMd));

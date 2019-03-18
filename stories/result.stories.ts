@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 
 import { storiesOf, moduleMetadata } from '@storybook/angular';
-import { withReadme } from 'storybook-readme';
 
 import { MarkdownModule as NgxMarkdownModule } from 'ngx-markdown';
 
@@ -25,13 +24,16 @@ import * as warnMd from '../projects/components/result/demo/warn.md';
 import { createStoryWithMarkdown } from './util';
 
 storiesOf('result', module)
+  .addParameters({
+    notes: readme
+  })
   .addDecorator(
     moduleMetadata({
       imports: [BrowserModule, ResultModule, MatIconModule, NgxMarkdownModule.forRoot()],
       declarations: [BasicComponent, SuccessComponent, FailureComponent, WaitComponent, WarnComponent]
     })
   )
-  .addDecorator(withReadme([readme]))
+
   .add('basic', createStoryWithMarkdown('demo-basic', basicMd))
   .add('success', createStoryWithMarkdown('demo-success', successMd))
   .add('failure', createStoryWithMarkdown('demo-failure', failureMd))

@@ -1,1 +1,1 @@
-declare module '@storybook/addon-options';
+// declare module '@storybook/addon-options';

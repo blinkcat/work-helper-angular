@@ -1,5 +1,4 @@
 import { storiesOf, moduleMetadata } from '@storybook/angular';
-import { withReadme } from 'storybook-readme';
 
 import { MarkdownModule as NgxMarkdownModule } from 'ngx-markdown';
 
@@ -17,12 +16,14 @@ import * as readme from '../projects/components/flex/README.md';
 import { createStoryWithMarkdown } from './util';
 
 storiesOf('flex', module)
+  .addParameters({
+    notes: readme
+  })
   .addDecorator(
     moduleMetadata({
       imports: [FlexModule, NgxMarkdownModule.forRoot(), MatRadioModule],
       declarations: [BasicComponent, FlexItemComponent]
     })
   )
-  .addDecorator(withReadme([readme]))
   .add('basic', createStoryWithMarkdown('demo-basic', basicMd))
   .add('flex-item', createStoryWithMarkdown('demo-flex-item', flexItemMd));

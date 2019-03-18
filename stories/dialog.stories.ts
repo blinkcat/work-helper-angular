@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { storiesOf, moduleMetadata } from '@storybook/angular';
-import { withReadme } from 'storybook-readme';
 
 import { MarkdownModule as NgxMarkdownModule } from 'ngx-markdown';
 import { MatButtonModule } from '@angular/material/button';
@@ -20,6 +19,9 @@ import * as selectMd from '../projects/components/dialog/demo/select.md';
 import { createStoryWithMarkdown } from './util';
 
 storiesOf('dialog', module)
+  .addParameters({
+    notes: readme
+  })
   .addDecorator(
     moduleMetadata({
       imports: [
@@ -34,6 +36,5 @@ storiesOf('dialog', module)
       declarations: [AlertComponent, SelectComponent]
     })
   )
-  .addDecorator(withReadme([readme]))
   .add('alert', createStoryWithMarkdown('demo-alert', alertMd))
   .add('select', createStoryWithMarkdown('demo-select', selectMd));

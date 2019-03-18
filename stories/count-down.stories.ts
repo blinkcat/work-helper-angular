@@ -1,5 +1,4 @@
 import { storiesOf, moduleMetadata } from '@storybook/angular';
-import { withReadme } from 'storybook-readme';
 
 import { MarkdownModule as NgxMarkdownModule } from 'ngx-markdown';
 
@@ -19,13 +18,15 @@ import * as stopEventMd from '../projects/components/count-down/demo/stop-event.
 import { createStoryWithMarkdown } from './util';
 
 storiesOf('count-down', module)
+  .addParameters({
+    notes: readme
+  })
   .addDecorator(
     moduleMetadata({
       imports: [CountDownModule, MatButtonModule, NgxMarkdownModule.forRoot()],
       declarations: [BasicComponent, FormatComponent, StopEventComponent]
     })
   )
-  .addDecorator(withReadme([readme]))
   .add('basic', createStoryWithMarkdown('demo-basic', basicMd))
   .add('format', createStoryWithMarkdown('demo-format', formatMd))
   .add('stop event', createStoryWithMarkdown('demo-stop-event', stopEventMd));

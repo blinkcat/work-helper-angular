@@ -2,18 +2,24 @@
  * @see https://storybook.js.org/basics/guide-angular/
  */
 
-import { configure, addDecorator } from '@storybook/angular';
-import { withOptions } from '@storybook/addon-options';
+import { configure, addParameters } from '@storybook/angular';
+import { create } from '@storybook/theming';
 
 /**
- * @see https://github.com/storybooks/storybook/tree/v4.0.0-rc.1/addons/options#getting-started
+ * @see https://github.com/storybooks/storybook/blob/next/MIGRATION.md#options-addon-deprecated
  */
-addDecorator(
-  withOptions({
-    name: 'work helper angular storybook',
-    addonPanelInRight: true
-  })
-);
+addParameters({
+  options: {
+    theme: create({
+      base: 'light',
+      brandTitle: 'work helper angular'
+      // brandImage: './miao.jpeg'
+    }),
+    // name: 'Angular',
+    showPanel: false,
+    panelPosition: 'right'
+  }
+});
 
 function loadStories() {
   // put welcome screen at the top of the list so it's the first one displayed
