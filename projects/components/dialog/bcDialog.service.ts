@@ -1,7 +1,7 @@
 import { Injectable, TemplateRef } from '@angular/core';
 
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { ThemePalette } from '@angular/material';
+import { ThemePalette } from '@angular/material/core';
 import { ComponentType } from '@angular/cdk/portal';
 
 import { AlertComponent } from './alert.component';

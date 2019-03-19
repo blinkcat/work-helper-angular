@@ -8,7 +8,7 @@ import {
   ChangeDetectionStrategy
 } from '@angular/core';
 
-import { ThemePalette } from '@angular/material';
+import { ThemePalette } from '@angular/material/core';
 
 import { isTemplateRef } from '../util';
 
