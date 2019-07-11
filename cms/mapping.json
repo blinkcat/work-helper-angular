@@ -1,10 +1,10 @@
 {
   "title": "byj",
-  "main.css": "https://blinkcat.github.io/work-helper-angular/cms/static/css/main.81a8d854.css",
-  "main.js": "https://blinkcat.github.io/work-helper-angular/cms/static/js/main.ec1a1dfc.js",
-  "main.js.map": "https://blinkcat.github.io/work-helper-angular/cms/static/js/main.ec1a1dfc.js.map",
+  "main.css": "https://blinkcat.github.io/work-helper-angular/cms/static/css/main.ba469f8e.css",
+  "main.js": "https://blinkcat.github.io/work-helper-angular/cms/static/js/main.16b98afc.js",
+  "main.js.map": "https://blinkcat.github.io/work-helper-angular/cms/static/js/main.16b98afc.js.map",
   "index.html": "https://blinkcat.github.io/work-helper-angular/cms/index.html",
-  "precache-manifest.75fc62d70c70c7c938670c90bd6f2f07.js": "https://blinkcat.github.io/work-helper-angular/cms/precache-manifest.75fc62d70c70c7c938670c90bd6f2f07.js",
+  "precache-manifest.1f110f48ab7856b818b742d091e0a548.js": "https://blinkcat.github.io/work-helper-angular/cms/precache-manifest.1f110f48ab7856b818b742d091e0a548.js",
   "service-worker.js": "https://blinkcat.github.io/work-helper-angular/cms/service-worker.js",
-  "static/css/main.81a8d854.css.map": "https://blinkcat.github.io/work-helper-angular/cms/static/css/main.81a8d854.css.map"
+  "static/css/main.ba469f8e.css.map": "https://blinkcat.github.io/work-helper-angular/cms/static/css/main.ba469f8e.css.map"
 }
